@@ -31,6 +31,7 @@ def connect_to_switch(ssid: str, password: str):
                 iface.connect(network_profile)
                 while iface.status() == const.IFACE_CONNECTING:
                     time.sleep(0.3)
+                print("Switch Connected")
                 return True
     return False
 
@@ -38,4 +39,5 @@ def connect_to_switch(ssid: str, password: str):
 def disconnect_to_swicth():
     wifi = pywifi.PyWiFi()
     iface: pywifi.iface.Interface = wifi.interfaces()[0]
+    print("Disconnecting Switch")
     iface.disconnect()

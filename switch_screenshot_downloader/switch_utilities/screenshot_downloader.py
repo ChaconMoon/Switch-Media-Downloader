@@ -13,6 +13,7 @@ def connect_to_website_images():
     options.add_argument("--headless")
     driver = webdriver.Edge(options=options)
     driver.get("http://192.168.0.1/index.html")
+    print("Open Web Browser")
     while driver.find_elements(By.TAG_NAME, "img") == []:
         time.sleep(0.1)
     images = driver.find_elements(By.TAG_NAME, "img")
@@ -21,6 +22,7 @@ def connect_to_website_images():
     except Exception as e:
         print(e)
     finally:
+        print("Exit Web Browser")
         driver.quit()
         return link_list
 
@@ -33,4 +35,4 @@ def get_images(images_url: list[str]):
             print(f"Downloading: {picture_name}")
             with open(f"./img/{picture_name}", "wb") as file:
                 file.write(picture_test.content)
-        pass
+        return f"./img/{picture_name}"
