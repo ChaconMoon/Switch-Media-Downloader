@@ -5,12 +5,17 @@ description = ""
 authors = ["Carlos Chacón <chaconmooncarlos@gmail.com>"]
 readme = "README.md"
 
+packages = [
+    {include = "bluesky_API", from = "switch_screenshot_downloader"},
+    {include = "switch_utilities", from = "switch_screenshot_downloader"},
+]
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "3.12.5"
 pywifi = "^1.1.12"
 comtypes = "^1.4.9"
 requests = "^2.32.3"
 selenium = "^4.28.1"
+atproto = "^0.0.58"
 
 
 [build-system]
