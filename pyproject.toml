@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "switch-screenshot-downloader"
+version = "0.1.0"
+description = ""
+authors = ["Carlos Chacón <chaconmooncarlos@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pywifi = "^1.1.12"
+comtypes = "^1.4.9"
+requests = "^2.32.3"
+selenium = "^4.28.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
