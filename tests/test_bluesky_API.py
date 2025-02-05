@@ -1,26 +1,31 @@
-import unittest
-from APIs_Modules.bluesky_api import connect_bluesky, publish_image
+import pytest
+from APIs_Modules.bluesky_api import connect_bluesky, publish_image, publish_video
 from atproto import Client
 
 
-class TestBlueSkyAPI(unittest.TestCase):
-    def test_bluesky_connection(self):
-        self.assertEqual(
-            type(connect_bluesky()), type(Client()), "Se ha podido iniciar sesión"
+def test_bluesky_connection():
+    assert type(connect_bluesky()) is type(Client())
+
+
+def test_bluesky_publish_photo():
+    assert (
+        publish_image(
+            msg="Esta imagen esta siendo usada con fines de testeo.",
+            file="./img/placeholder_testing.jpg",
+            alt_text="Esta imagen esta usado con fines de resteo.",
+            client=connect_bluesky(),
         )
+        is True
+    )
 
-    def test_publish_image(self):
-        self.assertEqual(
-            publish_image(
-                msg="Esta imagen esta siendo usada con fines de testeo",
-                file="./img/placeholder_testing.jpg",
-                alt_text="Esta imagen esta siendo usada con fines de testeo.",
-                client=connect_bluesky(),
-            ),
-            True,
-            "La imagen se ha publicada correctamente.",
+
+def test_bluesky_publish_video():
+    assert (
+        publish_video(
+            "Este video esta siendo usado con fines de testeo.",
+            file="./video/video_testing.mp4",
+            alt_text="Este video esta siendo usado con fines de testeo.",
+            client=connect_bluesky(),
         )
-
-
-if __name__ == "__main__":
-    unittest.main()
+        is True
+    )
