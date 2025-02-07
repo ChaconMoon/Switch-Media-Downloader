@@ -1,5 +1,5 @@
 import pytest
-from APIs_Modules.bluesky_api import connect_bluesky, publish_image, publish_video
+from src.APIs.bluesky import connect_bluesky, publish_image, publish_video
 from atproto import Client
 
 
