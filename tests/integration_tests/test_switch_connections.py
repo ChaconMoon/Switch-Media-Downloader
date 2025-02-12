@@ -1,10 +1,10 @@
 import pytest
-from src.switch.connector import (
+from switch.connector import (
     connect_to_switch,
     get_switch_network,
     disconnect_to_swicth,
 )
-from src.switch.downloaders.image import (
+from switch.downloaders.image import (
     connect_to_website_images,
     get_switch_images,
 )
@@ -16,7 +16,7 @@ def test_switch_search():
 
 def test_connect_switch():
     assert (
-        connect_to_switch(ssid=get_switch_network(), password="4qqwwgnh") is not False
+        connect_to_switch(ssid=get_switch_network(), password="xr4tfkjf") is not False
     )
 
 
