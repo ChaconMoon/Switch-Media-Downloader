@@ -25,7 +25,7 @@ def download_file(url_file: str) -> str:
                 os.makedirs(f"./img/{game_id}/")
             except FileExistsError:
                 pass
-            file_path = f"./img/{game_id}/{file_name}.jpg"
+            file_path = f"./img/{game_id}/{file_name}"
     with open(file_path, "wb") as file:
         file.write(file_request.content)
     return f"./img/{file_name}"
