@@ -9,7 +9,7 @@ def download_file(url_file: str) -> str:
         file_name = url_file.split("/")[-1]
     print(f"Downloading: {file_name}")
     game_id = file_name.split("-")[-1].split(".")[0]
-    with open("./model/games.json") as games_buffer:
+    with open("./data/games.json") as games_buffer:
         games_list = games_buffer.read()
         try:
             list_of_games = json.loads(games_list)
