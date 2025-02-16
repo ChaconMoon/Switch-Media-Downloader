@@ -8,7 +8,7 @@ from switch.downloaders.image import (
     get_switch_images,
 )
 from switch.downloaders.video import connect_to_website_video
-from APIs.bluesky import publish_image, connect_bluesky
+from APIs.bluesky import BlueSky
 
 
 def display_logo():
@@ -34,6 +34,7 @@ def display_logo():
 if __name__ == "__main__":
     display_logo()
     wifi = get_switch_network()
+    bluesky = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
     print(f"Wifi Switch = {wifi}")
     password = input("Contraseña Wifi Switch: ")
     if connect_to_switch(wifi, password):
@@ -46,9 +47,9 @@ if __name__ == "__main__":
 
         match input("Quieres publicar esta captura: (y/n)"):
             case "y":
-                publish_image(
+                bluesky.connect()
+                bluesky.publish_image(
                     msg="Esta imagen sirve para probar si puedo publicar una imagen con su relación de aspecto correcta",
                     file=photo_path,
                     alt_text="Esto es solo otra prueba",
-                    client=connect_bluesky(),
                 )

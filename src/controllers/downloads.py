@@ -1,22 +1,30 @@
 import requests
 import json
 import os
+import re
 
 
 def download_file(url_file: str) -> str:
+    print(f"Downloading: {url_file}")
     file_request = requests.get(url_file)
     if file_request.status_code == 200:
         file_name = url_file.split("/")[-1]
-    print(f"Downloading: {file_name}")
     game_id = file_name.split("-")[-1].split(".")[0]
     with open("./data/games.json") as games_buffer:
         games_list = games_buffer.read()
         try:
             list_of_games = json.loads(games_list)
-            file_name = f"{list_of_games[game_id]} {file_name.split('-')[0]}"
-            file_path = f"./img/{list_of_games[game_id]}/{file_name}.jpg"
+            game_name = f"{list_of_games[game_id]}"
+            file_name = f"{game_name} {file_name.split('-')[0]}"
+            game_name = re.sub(r"[/\\:*\"<>|]", "", game_name)
+            file_name = re.sub(r"[/\\:*\"<>|]", "", file_name)
+            file_path = f"./img/{game_name}/{file_name}.jpg"
             try:
-                os.makedirs(f"./img/{list_of_games[game_id]}")
+                os.makedirs("./img/")
+            except FileExistsError:
+                pass
+            try:
+                os.makedirs(f"./img/{game_name.replace(':', '')}")
             except FileExistsError:
                 pass
         except KeyError:
@@ -28,4 +36,4 @@ def download_file(url_file: str) -> str:
             file_path = f"./img/{game_id}/{file_name}"
     with open(file_path, "wb") as file:
         file.write(file_request.content)
-    return f"./img/{file_name}"
+    return file_path
