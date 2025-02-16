@@ -1,6 +1,6 @@
 import time
 from selenium.webdriver.common.by import By
-from controllers.input_out_file import download_file
+from controllers.downloads import download_file
 from controllers.selenium.edge import (
     start_selenium_connection_edge,
     exit_selenium_connection_edge,

@@ -4,7 +4,7 @@ from controllers.selenium.edge import (
     start_selenium_connection_edge,
     exit_selenium_connection_edge,
 )
-from controllers.input_out_file import download_file
+from controllers.downloads import download_file
 
 
 def connect_to_website_images():
@@ -27,8 +27,9 @@ def get_switch_images(images_url_list: list[str]):
         for url_image in images_url_list:
             download_file(url_image)
         return True
-    except OSError:
-        print("Error en la obtención de la escritura de la imagen.")
+    except OSError as e:
+        print(e)
+        print("Error en la obtención de la imagen.")
         return None
     except BlockingIOError:
         print("Error en la escritura de la imagen")
