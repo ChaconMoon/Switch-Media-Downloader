@@ -922,13 +922,13 @@ files = [
 
 [[package]]
 name = "trio"
-version = "0.28.0"
+version = "0.29.0"
 description = "A friendly Python library for async concurrency and I/O"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "trio-0.28.0-py3-none-any.whl", hash = "sha256:56d58977acc1635735a96581ec70513cc781b8b6decd299c487d3be2a721cd94"},
-    {file = "trio-0.28.0.tar.gz", hash = "sha256:4e547896fe9e8a5658e54e4c7c5fa1db748cbbbaa7c965e7d40505b928c73c05"},
+    {file = "trio-0.29.0-py3-none-any.whl", hash = "sha256:d8c463f1a9cc776ff63e331aba44c125f423a5a13c684307e828d930e625ba66"},
+    {file = "trio-0.29.0.tar.gz", hash = "sha256:ea0d3967159fc130acb6939a0be0e558e364fee26b5deeecc893a6b08c361bdf"},
 ]
 
 [package.dependencies]
@@ -941,13 +941,13 @@ sortedcontainers = "*"
 
 [[package]]
 name = "trio-websocket"
-version = "0.11.1"
+version = "0.12.0"
 description = "WebSocket library for Trio"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "trio-websocket-0.11.1.tar.gz", hash = "sha256:18c11793647703c158b1f6e62de638acada927344d534e3c7628eedcb746839f"},
-    {file = "trio_websocket-0.11.1-py3-none-any.whl", hash = "sha256:520d046b0d030cf970b8b2b2e00c4c2245b3807853ecd44214acd33d74581638"},
+    {file = "trio_websocket-0.12.0-py3-none-any.whl", hash = "sha256:d50abf361d94d72ffc5151502e5ac11dae4782f1515f8a9e4a4d0971b82f793b"},
+    {file = "trio_websocket-0.12.0.tar.gz", hash = "sha256:d9bc17ee061c66c9abf62a08fe9f36949ad6be17eed281c3b979be9293f3df74"},
 ]
 
 [package.dependencies]
@@ -1136,4 +1136,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.5"
-content-hash = "dd9101f7f4cebeb967a4e13e9c55f60b96fc5472907401eb140415c2ca4a967b"
+content-hash = "fcdb9e117b6d40b294982e59eadd6bcf07b724bf349d9547d4e1e54064f6b4d3"
