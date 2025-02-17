@@ -1,6 +1,7 @@
 import tweepy
 from tweepy import Client
 from APIs.api import Api
+import os
 
 
 class Twitter(Api):
@@ -14,13 +15,11 @@ class Twitter(Api):
         token_secret: str,
         barrer_token: str,
     ):
-        self.primary_key = primary_key
-        self.secret_key = secret_key
-        self.token = token
-        self.secret_token = token_secret
-        self.barren_token = barrer_token
-
-        pass
+        self.primary_key = os.getenv(primary_key)
+        self.secret_key = os.getenv(secret_key)
+        self.token = os.getenv(token)
+        self.secret_token = os.getenv(token_secret)
+        self.barren_token = os.getenv(barrer_token)
 
     def connect(self) -> bool:
         try:

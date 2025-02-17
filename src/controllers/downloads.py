@@ -10,6 +10,7 @@ def download_file(url_file: str) -> str:
     if file_request.status_code == 200:
         file_name = url_file.split("/")[-1]
     game_id = file_name.split("-")[-1].split(".")[0]
+    extension = f"{file_name.split('.')[-1]}"
     with open("./data/games.json") as games_buffer:
         games_list = games_buffer.read()
         try:
@@ -18,7 +19,7 @@ def download_file(url_file: str) -> str:
             file_name = f"{game_name} {file_name.split('-')[0]}"
             game_name = re.sub(r"[/\\:*\"<>|]", "", game_name)
             file_name = re.sub(r"[/\\:*\"<>|]", "", file_name)
-            file_path = f"./img/{game_name}/{file_name}.jpg"
+            file_path = f"./img/{game_name}/{file_name}.{extension}"
             try:
                 os.makedirs("./img/")
             except FileExistsError:

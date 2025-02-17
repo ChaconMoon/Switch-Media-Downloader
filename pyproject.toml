@@ -6,7 +6,7 @@ authors = ["Carlos Chacón <chaconmooncarlos@gmail.com>"]
 readme = "README.md"
 
 packages = [
-    {include = "src", from = "Switch_Media_Downloader"},
+    {include = "src", from = "."},
     {include = "APIs", from = "src"},
     {include = "controllers", from = "src"},
     {include = "switch", from = "src"},
