@@ -1,6 +1,4 @@
 from abc import ABC, abstractmethod
-from atproto import Client as ATClient
-from tweepy import Client as TWClient
 
 
 class Api(ABC):
