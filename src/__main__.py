@@ -7,8 +7,8 @@ from switch.downloaders.image import (
     connect_to_website_images,
     get_switch_images,
 )
-from switch.downloaders.video import connect_to_website_video
-from APIs.bluesky import BlueSky
+from switch.downloaders.video import connect_to_website_video, get_video
+from controllers.publish import selectAPIs
 
 
 def display_logo():
@@ -33,23 +33,39 @@ def display_logo():
 
 if __name__ == "__main__":
     display_logo()
+    can_publish = False
     wifi = get_switch_network()
-    bluesky = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
-    print(f"Wifi Switch = {wifi}")
-    password = input("Contraseña Wifi Switch: ")
-    if connect_to_switch(wifi, password):
-        url_list = connect_to_website_images()
-        try:
-            if url_list is not None:
-                photo_path = get_switch_images(url_list)
-        finally:
-            disconnect_to_swicth()
+    if wifi is not None:
+        print(f"Wifi Switch = {wifi}")
+        password = input("Contraseña Wifi Switch: ")
 
-        match input("Quieres publicar esta captura: (y/n)"):
-            case "y":
-                bluesky.connect()
-                bluesky.publish_image(
-                    msg="Esta imagen sirve para probar si puedo publicar una imagen con su relación de aspecto correcta",
-                    file=photo_path,
-                    alt_text="Esto es solo otra prueba",
-                )
+        if connect_to_switch(wifi, password):
+            match input("Indique el contenido a descargar: (IMG/VIDEO)"):
+                case "IMG":
+                    url_list = connect_to_website_images()
+                    try:
+                        if url_list is not None:
+                            photo_path = get_switch_images(url_list)
+                            can_publish = True
+                    except BaseException:
+                        pass
+                case "VIDEO":
+                    link_video = connect_to_website_video()
+                    try:
+                        video_path = get_video(link_video)
+                        can_publish = True
+                    except BaseException:
+                        pass
+        else:
+            print("No se ha podido descargar nada de la switch ")
+        disconnect_to_swicth()
+        if can_publish:
+            # print(f"Se han descargado {len(url_list)} imagenes")
+            match input("Quieres publicar la priemra captura: (y/n)"):
+                case "y":
+                    client = selectAPIs()
+                    msg = input("Mensaje del post")
+                    alt_text = ""
+                    client.publish_video(msg=msg, file=video_path, alt_text=alt_text)
+    else:
+        print("No hay una red Wifi correspondiente a una Nintendo Switch")

@@ -10,9 +10,9 @@ from controllers.selenium.edge import (
 def connect_to_website_video():
     time.sleep(5)
     driver = start_selenium_connection_edge()
-    while driver.find_element(By.TAG_NAME, "video") is None:
+    while driver.find_elements(By.TAG_NAME, "source") == []:
         time.sleep(0.1)
-        video = driver.find_element(By.TAG_NAME, "video")
+    video = driver.find_elements(By.TAG_NAME, "source")[0]
     try:
         link_video = video.get_attribute("src")
     except Exception as e:
@@ -24,4 +24,4 @@ def connect_to_website_video():
 
 
 def get_video(url_video: str):
-    download_file(url_video)
+    return download_file(url_video)
