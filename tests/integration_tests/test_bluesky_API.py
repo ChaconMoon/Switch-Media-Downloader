@@ -1,22 +1,27 @@
-import pytest
 import os
 from APIs.bluesky import BlueSky
 from dotenv import load_dotenv
-from atproto import Client
 
 
 def test_bluesky_connection_credential_error():
     load_dotenv()
-    client = BlueSky(os.getenv("BLUESKY_SECUNDARY_NAME"),os.getenv("BLUESKY_SECUNDARY_API_KEY"))
+    client = BlueSky(
+        os.getenv("BLUESKY_SECUNDARY_NAME"), os.getenv("BLUESKY_SECUNDARY_API_KEY")
+    )
     assert client.connect() is not None
 
+
 def test_bluesky_connection_atprotocol_error():
-    client = BlueSky(os.getenv("BLUESKY_SECUNDARY_NAME"),os.getenv("BLUESKY_SECUNDARY_API_KEY"))
+    client = BlueSky(
+        os.getenv("BLUESKY_SECUNDARY_NAME"), os.getenv("BLUESKY_SECUNDARY_API_KEY")
+    )
     assert client.connect() is not False
 
 
 def test_bluesky_publish_photo():
-    client = BlueSky(os.getenv("BLUESKY_SECUNDARY_NAME"),os.getenv("BLUESKY_SECUNDARY_API_KEY"))
+    client = BlueSky(
+        os.getenv("BLUESKY_SECUNDARY_NAME"), os.getenv("BLUESKY_SECUNDARY_API_KEY")
+    )
     client.connect()
     assert (
         client.publish_image(
@@ -29,7 +34,9 @@ def test_bluesky_publish_photo():
 
 
 def test_bluesky_publish_video():
-    client = BlueSky(os.getenv("BLUESKY_SECUNDARY_NAME"),os.getenv("BLUESKY_SECUNDARY_API_KEY"))
+    client = BlueSky(
+        os.getenv("BLUESKY_SECUNDARY_NAME"), os.getenv("BLUESKY_SECUNDARY_API_KEY")
+    )
     client.connect()
     assert (
         client.publish_video(
