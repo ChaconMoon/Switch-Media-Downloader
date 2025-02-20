@@ -1,4 +1,3 @@
-import pytest
 from switch.connector import (
     connect_to_switch,
     get_switch_network,
