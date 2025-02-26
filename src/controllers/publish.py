@@ -20,5 +20,5 @@ def selectAPIs() -> Api:
                 os.getenv("TWITTER_PRIMARY_ACCESS_TOKEN_SECRET"),
                 os.getenv("TWITTER_BEARER_TOKEN"),
             )
-            twitter.connect()
+            print(f"Conexion conseguida: {twitter.connect()}")
             return twitter

@@ -11,8 +11,6 @@ def get_switch_network() -> str:
         for network in iface.scan_results():
             if network.ssid.startswith("switch_"):
                 return network.ssid
-            else:
-                return None
     else:
         return None
 

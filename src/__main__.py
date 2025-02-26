@@ -61,10 +61,10 @@ if __name__ == "__main__":
         disconnect_to_swicth()
         if can_publish:
             # print(f"Se han descargado {len(url_list)} imagenes")
-            match input("Quieres publicar la priemra captura: (y/n)"):
+            match input("Quieres publicar este video: (y/n)"):
                 case "y":
                     client = selectAPIs()
-                    msg = input("Mensaje del post")
+                    msg = input("Mensaje del post: ")
                     alt_text = ""
                     client.publish_video(msg=msg, file=video_path, alt_text=alt_text)
     else:
