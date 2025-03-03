@@ -2,14 +2,15 @@ import requests
 import json
 import os
 import re
+from controllers.name_file_controller import get_game_id, get_file_name
 
 
 def download_file(url_file: str) -> str:
     print(f"Downloading: {url_file}")
     file_request = requests.get(url_file)
     if file_request.status_code == 200:
-        file_name = url_file.split("/")[-1]
-    game_id = file_name.split("-")[-1].split(".")[0]
+        file_name = get_file_name(url_file)
+    game_id = get_game_id(file_name)
     extension = f"{file_name.split('.')[-1]}"
     with open("./data/game_titles.json") as games_buffer:
         games_list = games_buffer.read()
