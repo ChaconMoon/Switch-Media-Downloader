@@ -23,10 +23,11 @@ def connect_to_website_images():
 
 
 def get_switch_images(images_url_list: list[str]):
+    images_files = []
     try:
         for url_image in images_url_list:
-            download_file(url_image)
-        return True
+            images_files.append(download_file(url_image))
+        return images_files
     except OSError as e:
         print(e)
         print("Error en la obtención de la imagen.")
