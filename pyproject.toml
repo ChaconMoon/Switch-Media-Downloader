@@ -1,34 +1,38 @@
-[tool.poetry]
+[project]
 name = "switch-media-downloader"
 version = "0.1.0"
 description = "A Nintendo Switch screenshot and video downloader"
-authors = ["Carlos Chacón <chaconmooncarlos@gmail.com>"]
+authors = [
+  {name = "Carlos Chacón", email = "chaconmooncarlos@gmail.com"}]
 readme = "README.md"
+requires-python = ">=3.12.5, <3.13"
 
 packages = [
-    {include = "src", from = "."},
-    {include = "APIs", from = "src"},
-    {include = "controllers", from = "src"},
-    {include = "switch", from = "src"},
-    {include = "tests"}
+    {include = "switch_media_downloader", from = "."},
+    {include = "APIs", from = "switch-media-downloader"},
+    {include = "controllers", from = "switch-media-downloader"},
+    {include = "switch", from = "switch-media-downloader"},
+    {include = "tests", from = "."}
 ]
-[tool.poetry.dependencies]
-python = "3.12.5"
-pywifi = "1.1.12"
-comtypes = "1.4.9"
-requests = "2.32.3"
-selenium = "4.28.1"
-atproto = "0.0.58"
-python-dotenv = "1.0.1"
-ruff = "0.9.4"
-pytest = "8.3.4"
-tweepy = "4.15.0"
+
+dependencies = [
+"pywifi (==1.1.12)",
+"comtypes (==1.4.9)",
+"requests (==2.32.3)",
+"selenium (==4.28.1)",
+"atproto (==0.0.58)",
+"python-dotenv (==1.0.1)",
+"ruff (==0.9.4)",
+"pytest (==8.3.4)",
+"tweepy (==4.15.0)"
+]
 
 [tool.pytest.ini_options]
 pythonpath = [
-  "src"
+  "switch_media_downloader"
 ]
+testspaths = ["tests"]
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0"]
 build-backend = "poetry.core.masonry.api"
