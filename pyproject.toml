@@ -5,10 +5,9 @@ description = "A Nintendo Switch screenshot and video downloader"
 authors = [
   {name = "Carlos Chacón", email = "chaconmooncarlos@gmail.com"}]
 readme = "README.md"
-requires-python = ">=3.12.5, <3.13"
+requires-python = ">=3.12.5, <=3.13"
 
 packages = [
-    {include = "switch_media_downloader", from = "."},
     {include = "APIs", from = "switch-media-downloader"},
     {include = "controllers", from = "switch-media-downloader"},
     {include = "switch", from = "switch-media-downloader"},
