@@ -12,7 +12,7 @@ def download_file(url_file: str) -> str:
         file_name = get_file_name(url_file)
     game_id = get_game_id(file_name)
     extension = f"{file_name.split('.')[-1]}"
-    with open("./data/game_titles.json") as games_buffer:
+    with open("./data/game_titles.json", encoding="utf-8") as games_buffer:
         games_list = games_buffer.read()
         try:
             list_of_games = json.loads(games_list)
@@ -26,16 +26,16 @@ def download_file(url_file: str) -> str:
             except FileExistsError:
                 pass
             try:
-                os.makedirs(f"./img/{game_name.replace(':', '')}")
+                os.makedirs(f"./img/{game_name}")
             except FileExistsError:
                 pass
         except KeyError:
             print("Ese ID no esta en la lista, se usara el nombre por defecto.")
             try:
-                os.makedirs(f"./img/{game_id}/")
+                os.makedirs(f"./img/{game_id}/".encode())
             except FileExistsError:
                 pass
-            file_path = f"./img/{game_id}/{file_name}"
+            file_path = f"./img/{game_id}/{file_name}".encode()
     with open(file_path, "wb") as file:
         file.write(file_request.content)
     return file_path
