@@ -1,5 +1,8 @@
-from controllers.hashtag_controller import set_game_hashtag
-from controllers.name_file_controller import get_file_name, get_game_id
+from switch_media_downloader.controllers.hashtag_controller import set_game_hashtag
+from switch_media_downloader.controllers.name_file_controller import (
+    get_file_name,
+    get_game_id,
+)
 
 
 def test_hashtag_get_name():
