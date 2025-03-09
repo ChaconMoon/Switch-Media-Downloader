@@ -1,9 +1,9 @@
-from switch.connector import (
+from switch_media_downloader.switch.connector import (
     connect_to_switch,
     get_switch_network,
     disconnect_to_swicth,
 )
-from switch.downloaders.image import (
+from switch_media_downloader.switch.downloaders.image import (
     connect_to_website_images,
     get_switch_images,
 )

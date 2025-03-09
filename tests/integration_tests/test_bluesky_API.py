@@ -1,5 +1,5 @@
 import os
-from APIs.bluesky import BlueSky
+from switch_media_downloader.APIs.bluesky import BlueSky
 from dotenv import load_dotenv
 
 

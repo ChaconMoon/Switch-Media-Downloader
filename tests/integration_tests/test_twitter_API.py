@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from APIs.twitter import Twitter
+from switch_media_downloader.APIs.twitter import Twitter
 
 
 def test_twiiter_connection():
