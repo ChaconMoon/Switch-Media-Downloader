@@ -14,27 +14,31 @@ def download_file(url_file: str) -> str:
     with open("./data/game_titles.json", encoding="utf-8") as games_buffer:
         games_list = games_buffer.read()
         try:
+            base_path = "./img/"
+            if extension == "mp4":
+                base_path = "./video/"
             list_of_games = json.loads(games_list)
             game_name = f"{list_of_games[game_id]}"
             file_name = f"{game_name} {file_name.split('-')[0]}"
             game_name = re.sub(r"[/\\:*\"<>|]", "", game_name)
             file_name = re.sub(r"[/\\:*\"<>|]", "", file_name)
-            file_path = f"./img/{game_name}/{file_name}.{extension}"
+
+            file_path = f"{base_path}{game_name}/{file_name}.{extension}"
             try:
-                os.makedirs("./img/")
+                os.makedirs(base_path)
             except FileExistsError:
                 pass
             try:
-                os.makedirs(f"./img/{game_name}")
+                os.makedirs(f"{base_path}{game_name}")
             except FileExistsError:
                 pass
         except KeyError:
             print("Ese ID no esta en la lista, se usara el nombre por defecto.")
             try:
-                os.makedirs(f"./img/{game_id}/".encode())
+                os.makedirs(f"{base_path}{game_id}/".encode())
             except FileExistsError:
                 pass
-            file_path = f"./img/{game_id}/{file_name}".encode()
+            file_path = f"{base_path}{game_id}/{file_name}".encode()
     with open(file_path, "wb") as file:
         file.write(file_request.content)
     return file_path
