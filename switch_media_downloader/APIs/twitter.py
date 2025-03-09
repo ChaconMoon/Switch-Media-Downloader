@@ -2,7 +2,6 @@ import tweepy
 from tweepy import Client
 from tweepy.models import Media
 from APIs.api import Api
-import os
 
 
 class Twitter(Api):
