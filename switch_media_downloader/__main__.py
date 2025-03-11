@@ -127,7 +127,7 @@ def main():
         password = input("Contraseña Wifi Switch: ")
 
         if connect_to_switch(wifi, password):
-            match input("Indique el contenido a descargar: (IMAGE/VIDEO)"):
+            match input("Indique el contenido a descargar: (IMAGE/VIDEO): "):
                 case TypeMedia.IMAGE.name:
                     url_list = connect_to_website_images()
                     try:
@@ -140,7 +140,7 @@ def main():
                     disconnect_to_swicth()
                     if can_publish:
                         print(f"Se han descargado {len(url_list)} imagenes")
-                        match input("Quieres publicar esta imagen: (y/n)"):
+                        match input("Quieres publicar esta imagen: (y/n): "):
                             case "y":
                                 publish_media(
                                     TypeMedia.IMAGE, photo_path[0], reference_url
