@@ -9,4 +9,4 @@ def test_connection_is_none_if_ATProtocolError(mock_client: MagicMock):
     # Provoca que la funcion mockeada salte una excepción
     mock_client.side_effect = AtProtocolError
     connector_bluesky = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
-    assert connector_bluesky.connect() is None
+    assert connector_bluesky.connect() is False
