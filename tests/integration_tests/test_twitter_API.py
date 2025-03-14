@@ -26,8 +26,8 @@ def test_twiiter_publish_image():
     client.connect()
     assert (
         client.publish_image(
-            "Asi me imagino la gente cuando le digo que me gusta Just Dance",
-            "./img/test_warioware.jpg",
+            "Test",
+            "./img/placeholder_testing.jpg",
         )
         is True
     )
