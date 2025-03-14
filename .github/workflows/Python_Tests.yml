@@ -40,13 +40,13 @@ jobs:
         TWITTER_PRIMARY_API_SECRET_KEY: ${{secrets.TWITTER_PRIMARY_API_SECRET_KEY}}
         TWITTER_PRIMARY_ACCESS_TOKEN: ${{secrets.TWITTER_PRIMARY_ACCESS_TOKEN}}
         TWITTER_PRIMARY_ACCESS_TOKEN_SECRET: ${{secrets.TWITTER_PRIMARY_ACCESS_TOKEN_SECRET}}    
-      run: poetry run pytest -v .\tests\integration_tests\test_twitter_API.py::test_twiiter_connection
+      run: poetry run pytest -v tests\integration_tests\test_twitter_API.py::test_twiiter_connection
       
     - name: Run BlueSky Test
       env: 
         BLUESKY_PRINCIPAL_NAME: ${{secrets.BLUESKY_PRINCIPAL_NAME}}
         BLUESKY_PRINCIPAL_API_KEY: ${{secrets.BLUESKY_PRINCIPAL_API_KEY}}
-      run: poetry run pytest -v .\tests\integration_tests\test_twitter_API.py::test_twiiter_connection
+      run: poetry run pytest -v tests\integration_tests\test_twitter_API.py::test_twiiter_connection
       
     - name: Run Unit Test
-      run: poetry run pytest -v .\tests\unit_tests\
+      run: poetry run pytest -v tests\unit_tests\
