@@ -57,16 +57,15 @@ class BlueSky(Api):
             If the connection was Successful
 
         """
-        load_dotenv()
         try:
             print("Conectando...")
             self.client.login(self.account, self.token)
             print("Conexion exitosa")
             return True
-        except AtProtocolError:
+        except AtProtocolError as e:
             print("Error en el inicio de sesión en BlueSky")
             return False
-        except ValueError:
+        except ValueError as e:
             print("Error a la hora de importar las credenciales")
             return None
 

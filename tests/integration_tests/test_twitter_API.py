@@ -27,7 +27,7 @@ def test_twiiter_publish_image():
     assert (
         client.publish_image(
             "Test",
-            "./img/placeholder_testing.jpg",
+            "./tests/test_media/placeholder_testing.jpg",
         )
         is True
     )
