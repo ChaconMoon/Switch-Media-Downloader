@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python application
+name: Run Tests
 
 on:
   push:
@@ -28,7 +28,16 @@ jobs:
         
     - name: Install dependencies
       run: pip install poetry && poetry install
+      
+    - name: Run Unit Test
+      run: poetry run pytest -v tests/unit_tests/
 
+    - name: Run BlueSky Test
+      env: 
+        BLUESKY_SECUNDARY_NAME: ${{secrets.BLUESKY_SECUNDARY_NAME}}
+        BLUESKY_SECUNDARY_API_KEY: ${{secrets.BLUESKY_SECUNDARY_API_KEY}}
+      run: poetry run pytest -v tests/integration_tests/test_bluesky_API.py::test_bluesky_connection_atprotocol_error
+      
     - name: Run Twitter Test
       env: 
         TWITTER_BEARER_TOKEN: ${{secrets.TWITTER_BEARER_TOKEN}}
@@ -40,13 +49,4 @@ jobs:
         TWITTER_PRIMARY_API_SECRET_KEY: ${{secrets.TWITTER_PRIMARY_API_SECRET_KEY}}
         TWITTER_PRIMARY_ACCESS_TOKEN: ${{secrets.TWITTER_PRIMARY_ACCESS_TOKEN}}
         TWITTER_PRIMARY_ACCESS_TOKEN_SECRET: ${{secrets.TWITTER_PRIMARY_ACCESS_TOKEN_SECRET}}    
-      run: poetry run pytest -v tests\integration_tests\test_twitter_API.py::test_twiiter_connection
-      
-    - name: Run BlueSky Test
-      env: 
-        BLUESKY_PRINCIPAL_NAME: ${{secrets.BLUESKY_PRINCIPAL_NAME}}
-        BLUESKY_PRINCIPAL_API_KEY: ${{secrets.BLUESKY_PRINCIPAL_API_KEY}}
-      run: poetry run pytest -v tests\integration_tests\test_twitter_API.py::test_twiiter_connection
-      
-    - name: Run Unit Test
-      run: poetry run pytest -v tests\unit_tests\
+      run: poetry run pytest -v tests/integration_tests/test_twitter_API.py::test_twiiter_connection
