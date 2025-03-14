@@ -22,7 +22,7 @@ def test_bluesky_publish_photo():
         client.publish_image(
             msg="Esta imagen esta siendo usada con fines de testeo.",
             file="./tests/test_media/placeholder_testing.jpg",
-            alt_text="Esta imagen esta usado con fines de resteo.",
+            alt_text="Esta imagen esta usado con fines de resteo desde mi GitHub.",
         )
         is True
     )
@@ -37,7 +37,7 @@ def test_bluesky_publish_video():
         client.publish_video(
             "Este video esta siendo usado con fines de testeo.",
             file="./tests/test_media/video_testing.mp4",
-            alt_text="Este video esta siendo usado con fines de testeo.",
+            alt_text="Este video esta siendo usado con fines de testeo desde mi GitHub.",
         )
         is True
     )
