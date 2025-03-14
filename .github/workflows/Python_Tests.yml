@@ -28,7 +28,10 @@ jobs:
         
     - name: Install dependencies
       run: pip install poetry && poetry install
-
+      
+    - name: Run Unit Test
+      run: poetry run pytest -v tests\unit_tests\
+      
     - name: Run Twitter Test
       env: 
         TWITTER_BEARER_TOKEN: ${{secrets.TWITTER_BEARER_TOKEN}}
@@ -47,6 +50,3 @@ jobs:
         BLUESKY_PRINCIPAL_NAME: ${{secrets.BLUESKY_PRINCIPAL_NAME}}
         BLUESKY_PRINCIPAL_API_KEY: ${{secrets.BLUESKY_PRINCIPAL_API_KEY}}
       run: poetry run pytest -v tests\integration_tests\test_twitter_API.py::test_twiiter_connection
-      
-    - name: Run Unit Test
-      run: poetry run pytest -v tests\unit_tests\
