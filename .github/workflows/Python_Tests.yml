@@ -34,8 +34,8 @@ jobs:
 
     - name: Run BlueSky Test
       env: 
-        BLUESKY_PRINCIPAL_NAME: ${{secrets.BLUESKY_PRINCIPAL_NAME}}
-        BLUESKY_PRINCIPAL_API_KEY: ${{secrets.BLUESKY_PRINCIPAL_API_KEY}}
+        BLUESKY_SECUNDARY_NAME: ${{secrets.BLUESKY_SECUNDARY_NAME}}
+        BLUESKY_SECUNDARY_API_KEY: ${{secrets.BLUESKY_SECUNDARY_API_KEY}}
       run: poetry run pytest -v tests/integration_tests/test_bluesky_API.py::test_bluesky_connection_atprotocol_error
       
     - name: Run Twitter Test
