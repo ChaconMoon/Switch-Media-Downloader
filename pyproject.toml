@@ -31,7 +31,7 @@ dependencies = [
 pythonpath = [
   "switch_media_downloader"
 ]
-testspaths = ["tests"]
+testpaths = ["tests"]
 
 [build-system]
 requires = ["poetry-core>=2.0"]
