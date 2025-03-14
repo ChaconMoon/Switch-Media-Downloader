@@ -87,7 +87,7 @@ def add_hashtag_to_message(msg: str, reference_url: str) -> str:
     if game_hashtag is not None:
         if (
             input(
-                f"Se ha encontrado el siguiente hashtag {game_hashtag} ¿Quieres usarlo? y/n"
+                f"Se ha encontrado el siguiente hashtag {game_hashtag} ¿Quieres usarlo? (y/n): "
             )
             == "y"
         ):
