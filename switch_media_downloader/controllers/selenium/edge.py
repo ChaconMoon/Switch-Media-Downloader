@@ -1,11 +1,10 @@
 from selenium import webdriver
-from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.webdriver import WebDriver
 
 
 def start_selenium_connection_edge() -> WebDriver:
     try:
-        options = Options()
+        options = webdriver.EdgeOptions()
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--headless")
@@ -13,8 +12,8 @@ def start_selenium_connection_edge() -> WebDriver:
         driver.get("http://192.168.0.1/index.html")
         print("Open Web Browser")
         return driver
-    except BaseException:
-        return None
+    except BaseException as e:
+        raise e
 
 
 def exit_selenium_connection_edge(driver: WebDriver) -> bool:
