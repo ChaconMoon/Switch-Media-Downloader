@@ -2,12 +2,8 @@
 .vscode/
 
 # Media 
-*.jpg
-*.png
-*.gif
-*.mp4
-*.mkv
-*.mp3
+img/
+video/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
