@@ -23,7 +23,7 @@ def test_twiiter_publish_image():
     client.connect()
     assert (
         client.publish_image(
-            msg="Test Image",
+            msg="Imagen usada como test desde mi GitHub",
             file="./tests/test_media/placeholder_testing.jpg",
             alt_text="Alt Text",
         )
@@ -42,7 +42,7 @@ def test_twiiter_publish_video():
     client.connect()
     assert (
         client.publish_video(
-            msg="Test Video",
+            msg="Video usado como test desde mi GitHub",
             file="./tests/test_media/video_testing.mp4",
             alt_text="Alt Text",
         )
