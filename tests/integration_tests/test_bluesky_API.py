@@ -1,16 +1,13 @@
 import os
 from switch_media_downloader.APIs.bluesky import BlueSky
-from dotenv import load_dotenv
 
 
 def test_bluesky_connection_credential_error():
-    load_dotenv()
     client = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
     assert client.connect() is not None
 
 
 def test_bluesky_connection_atprotocol_error():
-    load_dotenv()
     client = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
     assert client.connect() is not False
 
