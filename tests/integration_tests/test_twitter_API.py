@@ -31,6 +31,25 @@ def test_twiiter_publish_image():
     )
 
 
+def test_twiiter_publish_image_none():
+    client = Twitter(
+        "TWITTER_PRIMARY_API_KEY",
+        "TWITTER_PRIMARY_API_SECRET_KEY",
+        "TWITTER_PRIMARY_ACCESS_TOKEN",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
+        "TWITTER_BEARER_TOKEN",
+    )
+    client.connect()
+    assert (
+        client.publish_image(
+            msg=None,
+            file=None,
+            alt_text=None,
+        )
+        is False
+    )
+
+
 def test_twiiter_publish_video():
     client = Twitter(
         "TWITTER_PRIMARY_API_KEY",
@@ -48,3 +67,58 @@ def test_twiiter_publish_video():
         )
         is True
     )
+
+
+def test_twiiter_publish_video_none():
+    client = Twitter(
+        "TWITTER_PRIMARY_API_KEY",
+        "TWITTER_PRIMARY_API_SECRET_KEY",
+        "TWITTER_PRIMARY_ACCESS_TOKEN",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
+        "TWITTER_BEARER_TOKEN",
+    )
+    client.connect()
+    assert (
+        client.publish_video(
+            msg=None,
+            file=None,
+            alt_text=None,
+        )
+        is False
+    )
+
+
+def test_update_media():
+    client = Twitter(
+        "TWITTER_PRIMARY_API_KEY",
+        "TWITTER_PRIMARY_API_SECRET_KEY",
+        "TWITTER_PRIMARY_ACCESS_TOKEN",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
+        "TWITTER_BEARER_TOKEN",
+    )
+    client.connect()
+    assert client.update_media("./tests/test_media/video_testing.mp4") is not None
+
+
+def test_update_media_none():
+    client = Twitter(
+        "TWITTER_PRIMARY_API_KEY",
+        "TWITTER_PRIMARY_API_SECRET_KEY",
+        "TWITTER_PRIMARY_ACCESS_TOKEN",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
+        "TWITTER_BEARER_TOKEN",
+    )
+    client.connect()
+    assert client.update_media(None) is None
+
+
+def test_update_media_not_valid():
+    client = Twitter(
+        "TWITTER_PRIMARY_API_KEY",
+        "TWITTER_PRIMARY_API_SECRET_KEY",
+        "TWITTER_PRIMARY_ACCESS_TOKEN",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
+        "TWITTER_BEARER_TOKEN",
+    )
+    client.connect()
+    assert client.update_media("./tests/test_media/video_testing") is None

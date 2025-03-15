@@ -70,7 +70,7 @@ class Twitter(Api):
             self.api = tweepy.API(self.auth, wait_on_rate_limit=True)
             print(self.api.verify_credentials().screen_name)
             return True
-        except BaseException as e:
+        except Exception as e:
             return print(e)
 
     def publish_image(self, msg: str, file: str, alt_text: str):
@@ -89,8 +89,9 @@ class Twitter(Api):
             photo = self.update_media(file)
             self.client.create_tweet(text=msg, media_ids=[photo.media_id])
             return True
-        except BaseException as e:
-            return print(e)
+        except TypeError as e:
+            print(e)
+            return False
 
     def publish_text():
         pass
@@ -110,8 +111,9 @@ class Twitter(Api):
             video = self.update_media(file)
             self.client.create_tweet(text=msg, media_ids=[video.media_id])
             return True
-        except BaseException as e:
-            return print(e)
+        except TypeError:
+            print("Error de tipo")
+            return False
 
     def view_preview():
         pass
@@ -124,5 +126,14 @@ class Twitter(Api):
         Returns:
             The media reference of the uploaded file
         """
-        media = self.api.media_upload(filename=file)
-        return media
+        try:
+            if (
+                os.path.exists(file) is False
+                or file.endswith(".mp4") is False
+                or file.endswith(".jpg")
+            ):
+                return None
+            media = self.api.media_upload(filename=file)
+            return media
+        except TypeError:
+            return None

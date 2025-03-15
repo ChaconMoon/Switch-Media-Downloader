@@ -63,10 +63,10 @@ class BlueSky(Api):
             self.client.login(self.account, self.token)
             print("Conexion exitosa")
             return True
-        except AtProtocolError as e:
+        except AtProtocolError:
             print("Error en el inicio de sesión en BlueSky")
             return False
-        except ValueError as e:
+        except ValueError:
             print("Error a la hora de importar las credenciales")
             return None
 
@@ -81,10 +81,11 @@ class BlueSky(Api):
         Returns:
             If the image is published
         """
-        with open(file, "rb") as f:
-            photo = f.read()
-            aspect_ratio = AspectRatio(width=1280, height=720)
         try:
+            with open(file, "rb") as f:
+                photo = f.read()
+                aspect_ratio = AspectRatio(width=1280, height=720)
+
             self.client.send_image(
                 text=msg,
                 image=photo,
@@ -94,6 +95,9 @@ class BlueSky(Api):
             return True
         except AtProtocolError:
             print("Error en ATProto, la imagen no ha sido publica")
+            return False
+        except TypeError:
+            print("Error de tipo")
             return False
 
     def publish_video(self, msg: str, file: str, alt_text: str) -> bool:
@@ -107,11 +111,11 @@ class BlueSky(Api):
         Returns:
             If the video is published
         """
-        with open(file, "rb") as v:
-            video = v.read()
-            aspect_ratio = AspectRatio(width=1280, height=720)
-
         try:
+            with open(file, "rb") as v:
+                video = v.read()
+                aspect_ratio = AspectRatio(width=1280, height=720)
+
             self.client.send_video(
                 text=msg,
                 video=video,
@@ -121,6 +125,9 @@ class BlueSky(Api):
             return True
         except AtProtocolError:
             print("Error en ATProto, el video no se ha publicado")
+            return False
+        except TypeError:
+            print("Error de tipo")
             return False
 
     def publish_text():
