@@ -12,7 +12,7 @@ def test_bluesky_connection_atprotocol_error():
     assert client.connect() is not False
 
 
-def test_bluesky_publish_photo():
+def test_bluesky_publish_image():
     client = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
     client.connect()
     assert (
@@ -22,6 +22,19 @@ def test_bluesky_publish_photo():
             alt_text="Esta imagen esta usado con fines de testeo desde mi GitHub.",
         )
         is True
+    )
+
+
+def test_bluesky_publish_image_none():
+    client = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
+    client.connect()
+    assert (
+        client.publish_image(
+            msg=None,
+            file=None,
+            alt_text=None,
+        )
+        is False
     )
 
 
@@ -37,4 +50,19 @@ def test_bluesky_publish_video():
             alt_text="Este video esta siendo usado con fines de testeo desde mi GitHub.",
         )
         is True
+    )
+
+
+def test_bluesky_publish_video_none():
+    client = BlueSky(
+        os.getenv("BLUESKY_SECUNDARY_NAME"), os.getenv("BLUESKY_SECUNDARY_API_KEY")
+    )
+    client.connect()
+    assert (
+        client.publish_video(
+            None,
+            None,
+            None,
+        )
+        is False
     )
