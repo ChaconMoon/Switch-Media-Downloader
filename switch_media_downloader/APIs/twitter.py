@@ -92,6 +92,9 @@ class Twitter(Api):
         except TypeError as e:
             print(e)
             return False
+        except AttributeError as e:
+            print(e)
+            return False
 
     def publish_text():
         pass
@@ -114,6 +117,9 @@ class Twitter(Api):
         except TypeError:
             print("Error de tipo")
             return False
+        except AttributeError as e:
+            print(e)
+            return False
 
     def view_preview():
         pass
@@ -127,13 +133,12 @@ class Twitter(Api):
             The media reference of the uploaded file
         """
         try:
-            if (
-                os.path.exists(file) is False
-                or file.endswith(".mp4") is False
-                or file.endswith(".jpg")
+            if os.path.exists(file) is False or (
+                file.endswith(".mp4") is False and file.endswith(".jpg") is False
             ):
                 return None
-            media = self.api.media_upload(filename=file)
-            return media
+            else:
+                media = self.api.media_upload(filename=file)
+                return media
         except TypeError:
             return None
