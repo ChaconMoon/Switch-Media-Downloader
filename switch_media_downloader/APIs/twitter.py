@@ -14,6 +14,12 @@ from tweepy import Client
 # --- Import Dependece to intect with Twitter media
 from tweepy.models import Media
 
+# --- Import Operative System Dependecies
+import os
+
+# --- load the enviroment variables dependeces ---
+from dotenv import load_dotenv
+
 # --- Import API interface module
 from APIs.api import Api
 
@@ -31,11 +37,12 @@ class Twitter(Api):
         token_secret: str,
         barrer_token: str,
     ):
-        self.primary_key = primary_key
-        self.secret_key = secret_key
-        self.token = token
-        self.secret_token = token_secret
-        self.barren_token = barrer_token
+        load_dotenv()
+        self.primary_key = os.getenv(primary_key)
+        self.secret_key = os.getenv(secret_key)
+        self.token = os.getenv(token)
+        self.secret_token = os.getenv(token_secret)
+        self.barren_token = os.getenv(barrer_token)
 
     def connect(self) -> bool:
         """

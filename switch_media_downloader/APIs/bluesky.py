@@ -41,6 +41,7 @@ class BlueSky(Api):
 
     # Init the name of the account and the token
     def __init__(self, account: str, token: str):
+        load_dotenv()
         self.account = os.getenv(account)
         self.token = os.getenv(token)
         pass
