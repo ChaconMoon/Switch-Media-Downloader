@@ -3,22 +3,22 @@ from switch_media_downloader.APIs.twitter import Twitter
 
 def test_twiiter_connection():
     client = Twitter(
-        "TWITTER_PRIMARY_API_KEY",
-        "TWITTER_PRIMARY_API_SECRET_KEY",
-        "TWITTER_PRIMARY_ACCESS_TOKEN",
-        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
-        "TWITTER_BEARER_TOKEN",
+        "TWITTER_PRIMARY_API_KEY_TESTS",
+        "TWITTER_PRIMARY_API_SECRET_KEY_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS",
+        "TWITTER_BEARER_TOKEN_TESTS",
     )
     assert client.connect() is True
 
 
 def test_twiiter_publish_image():
     client = Twitter(
-        "TWITTER_PRIMARY_API_KEY",
-        "TWITTER_PRIMARY_API_SECRET_KEY",
-        "TWITTER_PRIMARY_ACCESS_TOKEN",
-        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
-        "TWITTER_BEARER_TOKEN",
+        "TWITTER_PRIMARY_API_KEY_TESTS",
+        "TWITTER_PRIMARY_API_SECRET_KEY_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS",
+        "TWITTER_BEARER_TOKEN_TESTS",
     )
     client.connect()
     assert (
@@ -33,11 +33,11 @@ def test_twiiter_publish_image():
 
 def test_twiiter_publish_image_none():
     client = Twitter(
-        "TWITTER_PRIMARY_API_KEY",
-        "TWITTER_PRIMARY_API_SECRET_KEY",
-        "TWITTER_PRIMARY_ACCESS_TOKEN",
-        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
-        "TWITTER_BEARER_TOKEN",
+        "TWITTER_PRIMARY_API_KEY_TESTS",
+        "TWITTER_PRIMARY_API_SECRET_KEY_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS",
+        "TWITTER_BEARER_TOKEN_TESTS",
     )
     client.connect()
     assert (
@@ -52,11 +52,11 @@ def test_twiiter_publish_image_none():
 
 def test_twiiter_publish_video():
     client = Twitter(
-        "TWITTER_PRIMARY_API_KEY",
-        "TWITTER_PRIMARY_API_SECRET_KEY",
-        "TWITTER_PRIMARY_ACCESS_TOKEN",
-        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
-        "TWITTER_BEARER_TOKEN",
+        "TWITTER_PRIMARY_API_KEY_TESTS",
+        "TWITTER_PRIMARY_API_SECRET_KEY_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS",
+        "TWITTER_BEARER_TOKEN_TESTS",
     )
     client.connect()
     assert (
@@ -71,11 +71,11 @@ def test_twiiter_publish_video():
 
 def test_twiiter_publish_video_none():
     client = Twitter(
-        "TWITTER_PRIMARY_API_KEY",
-        "TWITTER_PRIMARY_API_SECRET_KEY",
-        "TWITTER_PRIMARY_ACCESS_TOKEN",
-        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
-        "TWITTER_BEARER_TOKEN",
+        "TWITTER_PRIMARY_API_KEY_TESTS",
+        "TWITTER_PRIMARY_API_SECRET_KEY_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS",
+        "TWITTER_BEARER_TOKEN_TESTS",
     )
     client.connect()
     assert (
@@ -90,11 +90,11 @@ def test_twiiter_publish_video_none():
 
 def test_update_media():
     client = Twitter(
-        "TWITTER_PRIMARY_API_KEY",
-        "TWITTER_PRIMARY_API_SECRET_KEY",
-        "TWITTER_PRIMARY_ACCESS_TOKEN",
-        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
-        "TWITTER_BEARER_TOKEN",
+        "TWITTER_PRIMARY_API_KEY_TESTS",
+        "TWITTER_PRIMARY_API_SECRET_KEY_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS",
+        "TWITTER_BEARER_TOKEN_TESTS",
     )
     client.connect()
     assert client.update_media("./tests/test_media/video_testing.mp4") is not None
@@ -102,11 +102,11 @@ def test_update_media():
 
 def test_update_media_none():
     client = Twitter(
-        "TWITTER_PRIMARY_API_KEY",
-        "TWITTER_PRIMARY_API_SECRET_KEY",
-        "TWITTER_PRIMARY_ACCESS_TOKEN",
-        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
-        "TWITTER_BEARER_TOKEN",
+        "TWITTER_PRIMARY_API_KEY_TESTS",
+        "TWITTER_PRIMARY_API_SECRET_KEY_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS",
+        "TWITTER_BEARER_TOKEN_TESTS",
     )
     client.connect()
     assert client.update_media(None) is None
@@ -114,11 +114,11 @@ def test_update_media_none():
 
 def test_update_media_not_valid():
     client = Twitter(
-        "TWITTER_PRIMARY_API_KEY",
-        "TWITTER_PRIMARY_API_SECRET_KEY",
-        "TWITTER_PRIMARY_ACCESS_TOKEN",
-        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
-        "TWITTER_BEARER_TOKEN",
+        "TWITTER_PRIMARY_API_KEY_TESTS",
+        "TWITTER_PRIMARY_API_SECRET_KEY_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS",
+        "TWITTER_BEARER_TOKEN_TESTS",
     )
     client.connect()
     assert client.update_media("./tests/test_media/video_testing") is None
