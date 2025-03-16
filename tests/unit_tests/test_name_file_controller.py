@@ -9,11 +9,20 @@ from switch_media_downloader.controllers.name_file_controller import (
 
 
 def test_get_file_valid_name_image():
-    assert get_file_name("http://192.0.0.1/image.png") == "image.png"
+    assert get_file_name("http://192.0.0.1/image.jpg") == "image.jpg"
 
 
 def test_get_file_valid_name_video():
     assert get_file_name("http://192.0.0.1/video.mp4") == "video.mp4"
+
+
+def test_get_file_invalid_name_image_github():
+    assert (
+        get_file_name(
+            "https://github.com/ChaconMoon/Switch-Media-Downloader/blob/master/tests/test_media/2024100319575600-DB679239AE5C0DC0D5E47C22D6492D98.jpg"
+        )
+        == "2024100319575600-DB679239AE5C0DC0D5E47C22D6492D98.jpg"
+    )
 
     # INVALID NAME TEST
 
@@ -42,8 +51,8 @@ def test_get_file_null_name():
 # VALIDE ID TEST
 def test_game_id_valid_name():
     assert (
-        get_game_id("2025030319095200-B6CE40797459B0890BF7CEF68A4CE587.jpg")
-        == "B6CE40797459B0890BF7CEF68A4CE587"
+        get_game_id("2024100319575600-DB679239AE5C0DC0D5E47C22D6492D98.jpg")
+        == "DB679239AE5C0DC0D5E47C22D6492D98"
     )
 
 
