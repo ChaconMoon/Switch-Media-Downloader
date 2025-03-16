@@ -12,8 +12,9 @@ def start_selenium_connection_edge() -> WebDriver:
         driver.get("http://192.168.0.1/index.html")
         print("Open Web Browser")
         return driver
-    except BaseException as e:
+    except Exception as e:
         raise e
+        return None
 
 
 def exit_selenium_connection_edge(driver: WebDriver) -> bool:
@@ -21,5 +22,5 @@ def exit_selenium_connection_edge(driver: WebDriver) -> bool:
         print("Exit Web Browser")
         driver.quit()
         return True
-    except BaseException:
+    except Exception:
         return False
