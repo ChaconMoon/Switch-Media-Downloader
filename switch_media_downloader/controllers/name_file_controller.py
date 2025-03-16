@@ -9,9 +9,8 @@ def get_game_id(file_name: str) -> str:
 def get_file_name(url_file: str) -> str:
     if url_file is None:
         return None
-    elif re.search(
-        "^http:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,})/([a-zA-Z0-9\\-_]+)\\.([a-zA-Z0-9]+)",
-        url_file,
+    elif (url_file.startswith("http://") or url_file.startswith("https://")) and (
+        url_file.endswith(".mp4") or url_file.endswith(".jpg")
     ):
         return url_file.split("/")[-1]
     else:
