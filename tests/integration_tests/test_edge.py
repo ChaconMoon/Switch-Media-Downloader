@@ -1,13 +1,13 @@
-from switch_media_downloader.controllers.selenium.edge import (
-    start_selenium_connection_edge,
-    exit_selenium_connection_edge,
-)
-from selenium.webdriver.edge.webdriver import WebDriver
+from switch_media_downloader.controllers.selenium.edge import Edge
 
 
 def test_start_selenium_connection_edge():
-    assert type(start_selenium_connection_edge()) is WebDriver
+    edge_connection = Edge()
+
+    assert edge_connection.start_selenium() is True
 
 
 def test_exit_selenium_connection_edge():
-    assert exit_selenium_connection_edge(start_selenium_connection_edge()) is True
+    edge_connection = Edge()
+    edge_connection.start_selenium()
+    assert edge_connection.exit_selenium() is True

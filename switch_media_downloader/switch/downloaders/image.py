@@ -1,15 +1,15 @@
 import time
 from selenium.webdriver.common.by import By
-from controllers.selenium.edge import (
-    start_selenium_connection_edge,
-    exit_selenium_connection_edge,
-)
+from controllers.selenium.firefox import Firefox
 from controllers.downloads import download_file
 
 
 def connect_to_website_images():
     time.sleep(5)
-    driver = start_selenium_connection_edge()
+
+    web_scrapper = Firefox()
+    web_scrapper.start_selenium()
+    driver = web_scrapper.driver
     while driver.find_elements(By.TAG_NAME, "img") == []:
         time.sleep(0.1)
     images = driver.find_elements(By.TAG_NAME, "img")
@@ -18,7 +18,7 @@ def connect_to_website_images():
     except Exception as e:
         print(e)
     finally:
-        exit_selenium_connection_edge(driver)
+        web_scrapper.exit_selenium()
         return link_list
 
 

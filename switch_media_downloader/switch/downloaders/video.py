@@ -1,15 +1,14 @@
 import time
 from selenium.webdriver.common.by import By
 from controllers.downloads import download_file
-from controllers.selenium.edge import (
-    start_selenium_connection_edge,
-    exit_selenium_connection_edge,
-)
+from controllers.selenium.firefox import Firefox
 
 
 def connect_to_website_video():
     time.sleep(5)
-    driver = start_selenium_connection_edge()
+    web_scrapper = Firefox()
+    web_scrapper.start_selenium()
+    driver = web_scrapper.driver
     while driver.find_elements(By.TAG_NAME, "source") == []:
         time.sleep(0.1)
     video = driver.find_elements(By.TAG_NAME, "source")[0]
@@ -19,7 +18,7 @@ def connect_to_website_video():
         print(e)
         return None
     finally:
-        exit_selenium_connection_edge(driver)
+        web_scrapper.exit_selenium(driver)
         return link_video
 
 
