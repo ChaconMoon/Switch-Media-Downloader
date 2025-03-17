@@ -14,9 +14,7 @@ def test_switch_search():
 
 
 def test_connect_switch():
-    assert (
-        connect_to_switch(ssid=get_switch_network(), password="pd3dopp4") is not False
-    )
+    assert connect_to_switch(ssid=get_switch_network(), password="3qwty7e") is not False
 
 
 def test_switch_screenshots_downloads():
