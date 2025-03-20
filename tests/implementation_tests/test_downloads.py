@@ -1,19 +1,23 @@
 from switch_media_downloader.controllers.downloads import download_file, request_file
+from switch.downloaders.image import get_switch_images
 
 
 def test_download_file_valid_image():
+    image_list = list()
+    image_list.append(
+        "https://raw.githubusercontent.com/ChaconMoon/Switch-Media-Downloader/master/tests/test_media/2024100319575600-DB679239AE5C0DC0D5E47C22D6492D98.jpg"
+    )
+    photo_path = get_switch_images(image_list)
     assert (
-        download_file(
-            "https://github.com/ChaconMoon/Switch-Media-Downloader/blob/master/tests/test_media/2024100319575600-DB679239AE5C0DC0D5E47C22D6492D98.jpg"
-        )
-        == ".\\Pictures\\Nintendo Switch\\Screenshots\\WarioWare Move It!\\WarioWare Move It! 2024100319575600.jpg"
+        photo_path
+        == "./Pictures/Nintendo Switch/Screenshots/WarioWare Move It!/WarioWare Move It! 2024100319575600.jpg"
     )
 
 
 def test_download_file_invalid_image():
     assert (
         download_file(
-            "https://github.com/ChaconMoon/Switch-Media-Downloader/blob/master/tests/test_media/nothing.jpg"
+            "https://raw.githubusercontent.com/ChaconMoon/Switch-Media-Downloader/master/tests/test_media/2024100319575600-DB679239AE5C0DC0D5E47C22D6492D98.jpg"
         )
         is None
     )

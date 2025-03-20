@@ -1,3 +1,4 @@
+import pathlib
 import time
 from selenium.webdriver.common.by import By
 from controllers.selenium.firefox import Firefox
@@ -27,7 +28,7 @@ def get_switch_images(images_url_list: list[str]):
     try:
         for url_image in images_url_list:
             images_files.append(download_file(url_image))
-        return images_files
+        return images_files[0]
     except OSError as e:
         print(e)
         print("Error en la obtención de la imagen.")
@@ -35,3 +36,10 @@ def get_switch_images(images_url_list: list[str]):
     except BlockingIOError:
         print("Error en la escritura de la imagen")
         return None
+
+
+def get_absolute_path_image(images_files_paths: list[str]):
+    home_path = str(pathlib.Path.home().absolute())
+    home_path = home_path.replace("\\", "/")
+    images_files_paths[0] = images_files_paths[0].replace("./", "/")
+    return home_path + images_files_paths[0]
