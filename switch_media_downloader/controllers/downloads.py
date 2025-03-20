@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import pathlib
 import re
 from controllers.name_file_controller import get_game_id, get_file_name
 
@@ -12,37 +13,32 @@ def download_file(url_file: str) -> str:
             file_name = get_file_name(url_file)
             game_id = get_game_id(file_name)
             extension = f"{file_name.split('.')[-1]}"
-            with open("./data/game_titles.json", encoding="utf-8") as games_buffer:
+            with open(".\\data\\game_titles.json", encoding="utf-8") as games_buffer:
                 games_list = games_buffer.read()
                 try:
-                    base_path = "./img/"
+                    base_path = "\\Screenshots\\"
                     if extension == "mp4":
-                        base_path = "./video/"
+                        base_path = "\\Video\\"
                     list_of_games = json.loads(games_list)
                     game_name = f"{list_of_games[game_id]}"
                     file_name = f"{game_name} {file_name.split('-')[0]}"
                     game_name = re.sub(r"[/\\:*\"<>|]", "", game_name)
                     file_name = re.sub(r"[/\\:*\"<>|]", "", file_name)
 
-                    file_path = f"{base_path}{game_name}/{file_name}.{extension}"
-                    try:
-                        os.makedirs(base_path)
-                    except FileExistsError:
-                        pass
-                    try:
-                        os.makedirs(f"{base_path}{game_name}")
-                    except FileExistsError:
-                        pass
+                    home_path = pathlib.Path().home()
+                    file_path = f".\\Pictures\\Nintendo Switch{base_path}{game_name}"
+
                 except KeyError:
                     print("Ese ID no esta en la lista, se usara el nombre por defecto.")
-                    try:
-                        os.makedirs(f"{base_path}{game_id}/".encode())
-                    except FileExistsError:
-                        pass
-                    file_path = f"{base_path}{game_id}/{file_name}".encode()
-            with open(file_path, "wb") as file:
+                    file_path = f".\\Pictures\\Nintendo Switch{base_path}{game_id}"
+
+                output_path = home_path / file_path
+                output_path.mkdir(parents=True, exist_ok=True)
+            with open(
+                f"{output_path.absolute()}\\{file_name}.{extension}", "wb"
+            ) as file:
                 file.write(file_request.content)
-            return file_path
+            return f"{file_path}\\{file_name}.{extension}"
     else:
         return None
 
