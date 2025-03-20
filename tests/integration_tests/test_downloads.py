@@ -6,7 +6,7 @@ def test_download_file_valid_image():
         download_file(
             "https://github.com/ChaconMoon/Switch-Media-Downloader/blob/master/tests/test_media/2024100319575600-DB679239AE5C0DC0D5E47C22D6492D98.jpg"
         )
-        == ".\\Pictures\\Nintendo Switch\\Screenshots\\WarioWare Move It!\\WarioWare Move It! 2024100319575600.jpg"
+        == "./Pictures/Nintendo Switch/Screenshots/WarioWare Move It!/WarioWare Move It! 2024100319575600.jpg"
     )
 
 
