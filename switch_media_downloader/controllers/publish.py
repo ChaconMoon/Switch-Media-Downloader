@@ -2,7 +2,6 @@ from APIs.bluesky import BlueSky
 from APIs.twitter import Twitter
 from APIs.api import Api
 from dotenv import load_dotenv
-import os
 
 
 def selectAPIs() -> Api:
