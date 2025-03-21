@@ -17,7 +17,7 @@ def test_download_file_valid_image():
 def test_download_file_invalid_image():
     assert (
         download_file(
-            "https://raw.githubusercontent.com/ChaconMoon/Switch-Media-Downloader/master/tests/test_media/2024100319575600-DB679239AE5C0DC0D5E47C22D6492D98.jpg"
+            "https://raw.githubusercontent.com/ChaconMoon/Switch-Media-Downloader/master/tests/test_media/20241003195750-DB679239AE5C0DC0D5E47C22D6492D98.jpg"
         )
         is None
     )
