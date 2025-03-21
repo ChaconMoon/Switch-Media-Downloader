@@ -31,15 +31,18 @@ jobs:
       
     - name: Run Unit Test
       run: poetry run pytest -v tests/unit_tests/
+      
+    - name: Run Integration Test
+      run: poetry run pytest -v tests/integration_tests/
 
     - name: Run Download Test
-      run: poetry run pytest -v tests/integration_tests/test_downloads.py
+      run: poetry run pytest -v tests/implementation_tests/test_downloads.py
 
     - name: Run BlueSky Test
       env: 
         BLUESKY_SECUNDARY_NAME: ${{secrets.BLUESKY_SECUNDARY_NAME}}
         BLUESKY_SECUNDARY_API_KEY: ${{secrets.BLUESKY_SECUNDARY_API_KEY}}
-      run: poetry run pytest -v tests/integration_tests/test_bluesky_API.py
+      run: poetry run pytest -v tests/implementation_tests/test_bluesky_API.py
       
     - name: Run Twitter Test
       env: 
@@ -52,5 +55,5 @@ jobs:
         TWITTER_PRIMARY_API_SECRET_KEY_TESTS: ${{secrets.TWITTER_PRIMARY_API_SECRET_KEY_TESTS}}
         TWITTER_PRIMARY_ACCESS_TOKEN_TESTS: ${{secrets.TWITTER_PRIMARY_ACCESS_TOKEN_TESTS}}
         TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS: ${{secrets.TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS}}    
-      run: poetry run pytest -v tests/integration_tests/test_twitter_API.py
+      run: poetry run pytest -v tests/implementation_tests/test_twitter_API.py
     
