@@ -21,6 +21,9 @@ from switch.downloaders.image import (
     get_switch_images,
 )
 
+# --- Get Path Controller ---
+from controllers.downloads import get_absolute_path
+
 # --- Hashtag of the games Dependence ---
 from controllers.hashtag_controller import set_game_hashtag
 
@@ -143,7 +146,9 @@ def main():
                         match input("Quieres publicar esta imagen: (y/n): "):
                             case "y":
                                 publish_media(
-                                    TypeMedia.IMAGE, photo_path[0], reference_url
+                                    TypeMedia.IMAGE,
+                                    get_absolute_path(photo_path),
+                                    reference_url,
                                 )
 
                 case TypeMedia.VIDEO.name:
@@ -157,7 +162,11 @@ def main():
                     if can_publish:
                         match input("Quieres publicar este video: (y/n)"):
                             case "y":
-                                publish_media(TypeMedia.VIDEO, video_path, link_video)
+                                publish_media(
+                                    TypeMedia.VIDEO,
+                                    get_absolute_path(video_path),
+                                    link_video,
+                                )
         else:
             print("No se ha podido descargar nada de la switch ")
     else:

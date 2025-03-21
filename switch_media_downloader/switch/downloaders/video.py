@@ -1,4 +1,7 @@
 import time
+
+import pathlib
+
 from selenium.webdriver.common.by import By
 from controllers.downloads import download_file
 from controllers.selenium.firefox import Firefox
@@ -18,9 +21,10 @@ def connect_to_website_video():
         print(e)
         return None
     finally:
-        web_scrapper.exit_selenium(driver)
+        web_scrapper.exit_selenium()
         return link_video
 
 
 def get_video(url_video: str):
-    return download_file(url_video)
+    home_path = pathlib.Path.home().cwd().stem
+    return home_path + download_file(url_video)

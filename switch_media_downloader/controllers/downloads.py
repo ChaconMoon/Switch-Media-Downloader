@@ -1,6 +1,5 @@
 import requests
 import json
-import os
 import pathlib
 import re
 from controllers.name_file_controller import get_game_id, get_file_name
@@ -30,6 +29,7 @@ def download_file(url_file: str) -> str:
 
                 except KeyError:
                     print("Ese ID no esta en la lista, se usara el nombre por defecto.")
+                    home_path = pathlib.Path().home()
                     file_path = f"./Pictures/Nintendo Switch{base_path}{game_id}"
 
                 output_path = home_path / file_path
@@ -38,7 +38,7 @@ def download_file(url_file: str) -> str:
                 f"{output_path.absolute()}/{file_name}.{extension}", "wb"
             ) as file:
                 file.write(file_request.content)
-            return f"{file_path}/{file_name}.{extension}"
+                return f"{file_path}/{file_name}.{extension}"
     else:
         return None
 
@@ -49,3 +49,9 @@ def request_file(url_file: str):
         return requests.get(url_file)
     else:
         return None
+
+
+def get_absolute_path(relative_path: str):
+    home_path = pathlib.Path().home()
+    full_path = home_path / relative_path
+    return str(full_path)

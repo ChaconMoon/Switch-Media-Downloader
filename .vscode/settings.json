@@ -1,6 +1,7 @@
 {
     "python.analysis.extraPaths": [
         "./switch_",
-        "./switch_"
+        "./switch_",
+        "./switch_media_downloader"
     ]
 }
