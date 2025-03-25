@@ -1020,30 +1020,28 @@ wsproto = ">=0.14"
 
 [[package]]
 name = "tweepy"
-version = "4.14.0"
-description = "Twitter library for Python"
+version = "4.15.0"
+description = "Library for accessing the X API (Twitter)"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "dde9ae2678857bbf1f237b5c3f3790568ce52a44.zip", hash = "sha256:a59b47e2e476d2dff464db412a6e04e0493a943d836cdd38f9f4111fdf0f1408"},
+    {file = "db28c0e84826485755eb7fcef0c30f75395dff5f.zip", hash = "sha256:bd834b8737b2bc89348edbba252f44d90df78df03d0048eff76def7572acd739"},
 ]
 
 [package.dependencies]
 oauthlib = ">=3.2.0,<4"
 requests = ">=2.27.0,<3"
-requests-oauthlib = ">=1.2.0,<2"
+requests-oauthlib = ">=1.2.0,<3"
 
 [package.extras]
 async = ["aiohttp (>=3.7.3,<4)", "async-lru (>=1.0.3,<3)"]
 dev = ["coverage (>=4.4.2)", "coveralls (>=2.1.0)", "tox (>=3.21.0)"]
-docs = ["myst-parser (==0.15.2)", "readthedocs-sphinx-search (==0.1.1)", "sphinx (==4.2.0)", "sphinx-hoverxref (==0.7b1)", "sphinx-tabs (==3.2.0)", "sphinx_rtd_theme (==1.0.0)"]
-socks = ["requests[socks] (>=2.27.0,<3)"]
 test = ["urllib3 (<2)", "vcrpy (>=1.10.3)"]
 
 [package.source]
 type = "url"
-url = "https://github.com/tweepy/tweepy/archive/dde9ae2678857bbf1f237b5c3f3790568ce52a44.zip"
+url = "https://github.com/tweepy/tweepy/archive/db28c0e84826485755eb7fcef0c30f75395dff5f.zip"
 
 [[package]]
 name = "typing-extensions"
@@ -1209,4 +1207,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12.5, <=3.13"
-content-hash = "acd5f16273f29aa426849272ff3a84ec34fe2cb1bb2bfcc006f0509c0e36b556"
+content-hash = "49235fa0dd21eb7ed894066286ce5e64e744fd0ff4ba8e6d1b2147e350e4fc8b"
