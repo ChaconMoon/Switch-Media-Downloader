@@ -23,7 +23,7 @@ dependencies = [
 "python-dotenv (==1.0.1)",
 "ruff (==0.9.4)",
 "pytest (==8.3.4)",
-"tweepy @ https://github.com/tweepy/tweepy/archive/dde9ae2678857bbf1f237b5c3f3790568ce52a44.zip",
+"tweepy @ https://github.com/tweepy/tweepy/archive/db28c0e84826485755eb7fcef0c30f75395dff5f.zip",
 "pyfakefs (>=5.7.4,<6.0.0)",
 "standard-imghdr (>=3.13.0,<4.0.0)"
 ]
