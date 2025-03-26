@@ -1,3 +1,4 @@
+import time
 from mastodon import Mastodon
 
 from dotenv import load_dotenv
@@ -35,7 +36,16 @@ class MastodonAPI(Api):
         self.client.toot(status=msg)
 
     def publish_video(self, msg, file, alt_text):
-        return super().publish_video(msg, file, alt_text)
+        video = self.client.media_post(
+            media_file=file, description=alt_text, mime_type="video/mp4"
+        )
+        info_media = self.client.media(video)
+
+        while info_media["url"] is None:
+            time.sleep(5)
+            info_media = self.client.media(video)
+
+        self.client.status_post(status=msg, media_ids=video.id)
 
     def view_preview(self, msg, file, alt_text):
         return super().view_preview(msg, file, alt_text)
