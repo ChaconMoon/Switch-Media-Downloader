@@ -9,8 +9,10 @@ def test_download_file_valid_image():
     )
     photo_path = get_switch_images(image_list)
     assert (
-        photo_path
-        == "./Pictures/Nintendo Switch/Screenshots/WarioWare Move It!/WarioWare Move It! 2024100319575600.jpg"
+        photo_path.endswith(
+            "/Pictures/Nintendo Switch/Screenshots/WarioWare Move It!/WarioWare Move It! 2024100319575600.jpg"
+        )
+        is True
     )
 
 

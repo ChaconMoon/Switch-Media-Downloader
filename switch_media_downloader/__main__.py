@@ -21,9 +21,6 @@ from switch.downloaders.image import (
     get_switch_images,
 )
 
-# --- Get Path Controller ---
-from controllers.downloads import get_absolute_path
-
 # --- Hashtag of the games Dependence ---
 from controllers.hashtag_controller import set_game_hashtag
 

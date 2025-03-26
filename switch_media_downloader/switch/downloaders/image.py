@@ -23,7 +23,7 @@ def connect_to_website_images():
         return link_list
 
 
-def get_switch_images(images_url_list: list[str]):
+def get_switch_images(images_url_list: list[str]) -> str:
     images_files = []
     try:
         for url_image in images_url_list:
