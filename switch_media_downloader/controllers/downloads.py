@@ -52,6 +52,7 @@ def request_file(url_file: str):
 
 
 def get_absolute_path(relative_path: str):
+    relative_path = relative_path.replace("./", "//")
     home_path = pathlib.Path().home()
     full_path = home_path / relative_path
     return str(full_path)

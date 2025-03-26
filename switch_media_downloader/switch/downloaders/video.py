@@ -26,5 +26,5 @@ def connect_to_website_video():
 
 
 def get_video(url_video: str):
-    home_path = pathlib.Path.home().cwd().stem
+    home_path = str(pathlib.Path.home().absolute())
     return home_path + download_file(url_video)
