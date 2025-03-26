@@ -147,7 +147,7 @@ def main():
                             case "y":
                                 publish_media(
                                     TypeMedia.IMAGE,
-                                    get_absolute_path(photo_path),
+                                    photo_path,
                                     reference_url,
                                 )
 
@@ -164,7 +164,7 @@ def main():
                             case "y":
                                 publish_media(
                                     TypeMedia.VIDEO,
-                                    get_absolute_path(video_path),
+                                    video_path,
                                     link_video,
                                 )
         else:
