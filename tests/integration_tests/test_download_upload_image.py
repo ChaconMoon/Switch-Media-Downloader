@@ -1,5 +1,5 @@
 from APIs.bluesky import BlueSky
-from switch.downloaders.image import get_switch_images, get_image
+from switch.downloaders.image import get_image
 from controllers.downloads import get_absolute_path
 from APIs.twitter import Twitter
 
