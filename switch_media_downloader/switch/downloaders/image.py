@@ -23,11 +23,11 @@ def connect_to_website_images():
         return link_list
 
 
-def get_switch_images(images_url_list: list[str]):
+def get_switch_images(images_url_list: list[str]) -> str:
     images_files = []
     try:
         for url_image in images_url_list:
-            images_files.append(download_file(url_image))
+            images_files.append(get_image(url_image))
         return images_files[0]
     except OSError as e:
         print(e)
@@ -38,8 +38,6 @@ def get_switch_images(images_url_list: list[str]):
         return None
 
 
-def get_absolute_path_image(images_files_paths: list[str]):
+def get_image(url_video: str):
     home_path = str(pathlib.Path.home().absolute())
-    home_path = home_path.replace("\\", "/")
-    images_files_paths[0] = images_files_paths[0].replace("./", "/")
-    return home_path + images_files_paths[0]
+    return home_path + download_file(url_video).replace("./", "/")

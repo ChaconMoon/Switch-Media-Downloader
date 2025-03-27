@@ -21,9 +21,6 @@ from switch.downloaders.image import (
     get_switch_images,
 )
 
-# --- Get Path Controller ---
-from controllers.downloads import get_absolute_path
-
 # --- Hashtag of the games Dependence ---
 from controllers.hashtag_controller import set_game_hashtag
 
@@ -147,7 +144,7 @@ def main():
                             case "y":
                                 publish_media(
                                     TypeMedia.IMAGE,
-                                    get_absolute_path(photo_path),
+                                    photo_path,
                                     reference_url,
                                 )
 
@@ -164,7 +161,7 @@ def main():
                             case "y":
                                 publish_media(
                                     TypeMedia.VIDEO,
-                                    get_absolute_path(video_path),
+                                    video_path,
                                     link_video,
                                 )
         else:
