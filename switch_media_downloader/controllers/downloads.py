@@ -12,7 +12,7 @@ def download_file(url_file: str) -> str:
             file_name = get_file_name(url_file)
             game_id = get_game_id(file_name)
             extension = f"{file_name.split('.')[-1]}"
-            with open("./data/game_titles.json", encoding="utf-8") as games_buffer:
+            with open("../data/game_titles.json", encoding="utf-8") as games_buffer:
                 games_list = games_buffer.read()
                 try:
                     base_path = "/Screenshots/"
