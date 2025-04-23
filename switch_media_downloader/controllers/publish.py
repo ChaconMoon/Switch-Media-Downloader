@@ -5,9 +5,11 @@ from APIs.api import Api
 from dotenv import load_dotenv
 
 
-def selectAPIs() -> Api:
+def selectAPIs(option="") -> Api:
     load_dotenv()
-    match input("Donde deseas publicar: Bluesky(B)/Twitter(T)/Mastodon(M): "):
+    if option == "":
+        option = input("Donde deseas publicar: Bluesky(B)/Twitter(T)/Mastodon(M): ")
+    match option:
         case "B":
             bluesky = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
             bluesky.connect()

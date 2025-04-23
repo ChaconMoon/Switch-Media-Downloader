@@ -8,6 +8,8 @@ Date: 09-03-2025
 # --- Standard Dependence ---
 from enum import Enum
 
+import argparse
+
 # --- Connect to switch Dependence ---
 from switch.connector import (
     get_switch_network,
@@ -45,6 +47,39 @@ class TypeMedia(Enum):
     IMAGE = 2
 
 
+def arguments():
+    parser = argparse.ArgumentParser(
+        description="Opciones de automatización del Script"
+    )
+    parser.add_argument(
+        "-p", "--password", type=str, help="The password of the Switch Wi-Fi"
+    )
+    media = parser.add_mutually_exclusive_group()
+    media.add_argument(
+        "-v", "--video", action="store_true", help="Set if you download a video"
+    )
+    media.add_argument(
+        "-i", "--image", action="store_true", help="Set if you download images"
+    )
+    parser.add_argument(
+        "--post", "--msg", type=str, help="The text of the post on the social media"
+    )
+    social = parser.add_mutually_exclusive_group()
+    social.add_argument(
+        "-m", "--mastodon", action="store_true", help="Publish the image on mastodon"
+    )
+    social.add_argument(
+        "-t", "--twitter", action="store_true", help="Publish the image on twitter"
+    )
+    social.add_argument(
+        "-b", "--bluesky", action="store_true", help="Publish the image on bluesky"
+    )
+    parser.add_argument(
+        "--hashtag", action="store_true", help="Use the hashtag of the game in the post"
+    )
+    return parser.parse_args()
+
+
 def display_logo():
     "Prints the program logo in the CLI"
     print("        ╭───┐┌─────────────────────────┐┌───╮")
@@ -68,7 +103,7 @@ def display_logo():
     print(" |___/ \\___/ \\_/\\_/ |_||_||_|\\___/\\__,_|\\__,_|\\___||_|\n")
 
 
-def add_hashtag_to_message(msg: str, reference_url: str) -> str:
+def add_hashtag_to_message(msg: str, reference_url: str, use_hashtag: bool) -> str:
     """Get the post and Add the Hashtag if exits and the user select use it
 
     Args:
@@ -84,8 +119,12 @@ def add_hashtag_to_message(msg: str, reference_url: str) -> str:
 
     """
     game_hashtag = set_game_hashtag(get_game_id(get_file_name(reference_url)))
+    print(game_hashtag)
     if game_hashtag is not None:
-        if (
+        if use_hashtag:
+            print(f"Se usara el siguiente hashtag {game_hashtag} ")
+            return f"{msg} {game_hashtag}"
+        elif (
             input(
                 f"Se ha encontrado el siguiente hashtag {game_hashtag} ¿Quieres usarlo? (y/n): "
             )
@@ -95,7 +134,14 @@ def add_hashtag_to_message(msg: str, reference_url: str) -> str:
     return msg
 
 
-def publish_media(typemedia: TypeMedia, media_path: str, reference_url: str):
+def publish_media(
+    typemedia: TypeMedia,
+    media_path: str,
+    reference_url: str,
+    hashtag: bool,
+    social_media="",
+    text="",
+):
     """Publish the media in the social media that the user choose
     Args:
         typemedia (TypeMedia): Define the media to post IMAGE / VIDEO
@@ -105,9 +151,12 @@ def publish_media(typemedia: TypeMedia, media_path: str, reference_url: str):
         >>> 'http://192.168.0.1/img/2025030913522800-A8E55523A054F56F3FE005BBD56F49A7.jpg'
 
     """
-    client = selectAPIs()
-    msg = input("Mensaje del post: ")
-    msg = add_hashtag_to_message(msg, reference_url)
+    client = selectAPIs(option=social_media)
+    if text == "":
+        msg = input("Mensaje del post: ")
+    else:
+        msg = text
+    msg = add_hashtag_to_message(msg, reference_url, hashtag)
     alt_text = ""
     if typemedia is TypeMedia.IMAGE:
         client.publish_image(msg=msg, file=media_path, alt_text=alt_text)
@@ -119,15 +168,26 @@ def main():
     """
     Main fuction of the program
     """
+    args = arguments()
     display_logo()
     can_publish = False
     wifi = get_switch_network()
     if wifi is not None:
-        print(f"Wifi Switch = {wifi}")
-        password = input("Contraseña Wifi Switch: ")
+        if args.password is None:
+            print(f"Wifi Switch = {wifi}")
+            password = input("Contraseña Wifi Switch: ")
+        else:
+            password = args.password
 
         if connect_to_switch(wifi, password):
-            match input("Indique el contenido a descargar: (IMAGE/VIDEO): "):
+            if args.video:
+                type_media = "VIDEO"
+            elif args.image:
+                type_media = "IMAGE"
+            else:
+                type_media = input("Indique el contenido a descargar: (IMAGE/VIDEO): ")
+
+            match type_media:
                 case TypeMedia.IMAGE.name:
                     url_list = connect_to_website_images()
                     try:
@@ -140,12 +200,31 @@ def main():
                     disconnect_to_swicth()
                     if can_publish:
                         print(f"Se han descargado {len(url_list)} imagenes")
-                        match input("Quieres publicar esta imagen: (y/n): "):
+                        if args.mastodon:
+                            social_media = "M"
+                            pubish_option = "y"
+                        elif args.twitter:
+                            social_media = "T"
+                            pubish_option = "y"
+                        elif args.bluesky:
+                            social_media = "B"
+                            pubish_option = "y"
+                        else:
+                            pubish_option = input(
+                                "Quieres publicar esta imagen: (y/n): "
+                            )
+                        match pubish_option:
                             case "y":
+                                if args.post is not None:
+                                    post_text = args.post
+
                                 publish_media(
                                     TypeMedia.IMAGE,
                                     photo_path,
                                     reference_url,
+                                    args.hashtag,
+                                    social_media,
+                                    text=post_text,
                                 )
 
                 case TypeMedia.VIDEO.name:
@@ -157,12 +236,31 @@ def main():
                         pass
                     disconnect_to_swicth()
                     if can_publish:
-                        match input("Quieres publicar este video: (y/n)"):
+                        if args.mastodon:
+                            social_media = "M"
+                            pubish_option = "y"
+                        elif args.twitter:
+                            social_media = "T"
+                            pubish_option = "y"
+                        elif args.bluesky:
+                            social_media = "B"
+                            pubish_option = "y"
+                        else:
+                            pubish_option = input("Quieres publicar este video: (y/n)")
+                        match pubish_option:
+                            case "y":
+                                if args.post is not None:
+                                    post_text = args.post
+
+                        match pubish_option:
                             case "y":
                                 publish_media(
                                     TypeMedia.VIDEO,
                                     video_path,
                                     link_video,
+                                    args.hashtag,
+                                    social_media,
+                                    text=post_text,
                                 )
         else:
             print("No se ha podido descargar nada de la switch ")
