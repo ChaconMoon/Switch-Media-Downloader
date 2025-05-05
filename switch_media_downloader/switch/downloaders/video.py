@@ -3,8 +3,8 @@ import time
 import pathlib
 
 from selenium.webdriver.common.by import By
-from controllers.downloads import download_file
-from controllers.selenium.firefox import Firefox
+from switch_media_downloader.controllers.downloads import download_file
+from switch_media_downloader.controllers.selenium.firefox import Firefox
 
 
 def connect_to_website_video():

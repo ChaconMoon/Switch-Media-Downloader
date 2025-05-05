@@ -1,7 +1,7 @@
-from APIs.bluesky import BlueSky
-from APIs.twitter import Twitter
-from APIs.mastodonAPI import MastodonAPI
-from APIs.api import Api
+from switch_media_downloader.APIs.bluesky import BlueSky
+from switch_media_downloader.APIs.twitter import Twitter
+from switch_media_downloader.APIs.mastodonAPI import MastodonAPI
+from switch_media_downloader.APIs.api import Api
 from dotenv import load_dotenv
 
 

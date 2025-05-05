@@ -1,8 +1,8 @@
 import pathlib
 import time
 from selenium.webdriver.common.by import By
-from controllers.selenium.firefox import Firefox
-from controllers.downloads import download_file
+from switch_media_downloader.controllers.selenium.firefox import Firefox
+from switch_media_downloader.controllers.downloads import download_file
 
 
 def connect_to_website_images():

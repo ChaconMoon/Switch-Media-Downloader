@@ -11,29 +11,29 @@ from enum import Enum
 import argparse
 
 # --- Connect to switch Dependence ---
-from switch.connector import (
+from switch_media_downloader.switch.connector import (
     get_switch_network,
     connect_to_switch,
     disconnect_to_swicth,
 )
 
 # --- Get switch images Dependence ---
-from switch.downloaders.image import (
+from switch_media_downloader.switch.downloaders.image import (
     connect_to_website_images,
     get_switch_images,
 )
 
 # --- Hashtag of the games Dependence ---
-from controllers.hashtag_controller import set_game_hashtag
+from .controllers.hashtag_controller import set_game_hashtag
 
 # --- Get media info Dependence ---
-from controllers.name_file_controller import get_file_name, get_game_id
+from .controllers.name_file_controller import get_file_name, get_game_id
 
 # --- Get switch video Dependence ---
-from switch.downloaders.video import connect_to_website_video, get_video
+from .switch.downloaders.video import connect_to_website_video, get_video
 
 # --- Get APIs Dependence ---
-from controllers.publish import selectAPIs
+from .controllers.publish import selectAPIs
 
 
 class TypeMedia(Enum):
