@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 import os
 
-from APIs.api import Api
+from switch_media_downloader.APIs.api import Api
 
 
 class MastodonAPI(Api):

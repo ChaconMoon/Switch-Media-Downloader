@@ -2,7 +2,10 @@ import requests
 import json
 import pathlib
 import re
-from controllers.name_file_controller import get_game_id, get_file_name
+from switch_media_downloader.controllers.name_file_controller import (
+    get_game_id,
+    get_file_name,
+)
 
 
 def download_file(url_file: str) -> str:

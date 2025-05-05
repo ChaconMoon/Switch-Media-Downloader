@@ -1,5 +1,5 @@
 from selenium import webdriver
-from controllers.selenium.web_browser import WebBrowser
+from switch_media_downloader.controllers.selenium.web_browser import WebBrowser
 
 
 class Firefox(WebBrowser):

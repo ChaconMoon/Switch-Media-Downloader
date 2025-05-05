@@ -21,7 +21,7 @@ import os
 from dotenv import load_dotenv
 
 # --- load Apis module
-from APIs.api import Api
+from switch_media_downloader.APIs.api import Api
 
 
 class BlueSky(Api):
