@@ -209,11 +209,13 @@ def main():
                             social_media = "B"
                             pubish_option = "y"
                         else:
+                            social_media = ""
                             pubish_option = input(
                                 "Quieres publicar esta imagen: (y/n): "
                             )
                         match pubish_option:
                             case "y":
+                                post_text = ""
                                 if args.post is not None:
                                     post_text = args.post
 
@@ -245,9 +247,11 @@ def main():
                             social_media = "B"
                             pubish_option = "y"
                         else:
+                            social_media = ""
                             pubish_option = input("Quieres publicar este video: (y/n)")
                         match pubish_option:
                             case "y":
+                                post_text = ""
                                 if args.post is not None:
                                     post_text = args.post
 

@@ -13,7 +13,9 @@ packages = [
     {include = "switch", from = "switch-media-downloader"},
     {include = "tests", from = "."}
 ]
-
+include = [
+  ".env_example",
+]
 dependencies = [
 "pywifi (==1.1.12)",
 "comtypes (==1.4.9)",

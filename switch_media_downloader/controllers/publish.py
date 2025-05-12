@@ -11,7 +11,7 @@ def selectAPIs(option="") -> Api:
         option = input("Donde deseas publicar: Bluesky(B)/Twitter(T)/Mastodon(M): ")
     match option:
         case "B":
-            bluesky = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
+            bluesky = BlueSky("BLUESKY_PRINCIPAL_NAME", "BLUESKY_PRINCIPAL_API_KEY")
             bluesky.connect()
             print("Conexión conseguida: con BlueSky")
             return bluesky
