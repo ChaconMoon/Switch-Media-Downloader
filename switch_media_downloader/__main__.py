@@ -119,7 +119,6 @@ def add_hashtag_to_message(msg: str, reference_url: str, use_hashtag: bool) -> s
 
     """
     game_hashtag = set_game_hashtag(get_game_id(get_file_name(reference_url)))
-    print(game_hashtag)
     if game_hashtag is not None:
         if use_hashtag:
             print(f"Se usara el siguiente hashtag {game_hashtag} ")
