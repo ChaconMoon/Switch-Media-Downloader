@@ -22,9 +22,33 @@ def test_twiiter_publish_image():
     )
     client.connect()
     assert (
-        client.publish_image(
+        client.publish_images(
             msg="Imagen usada como test desde mi GitHub",
-            file="./tests/test_media/placeholder_testing.jpg",
+            files=["./tests/test_media/placeholder_testing.jpg"],
+            alt_text="Alt Text",
+        )
+        is True
+    )
+
+
+def test_twiiter_publish_images():
+    client = Twitter(
+        "TWITTER_PRIMARY_API_KEY_TESTS",
+        "TWITTER_PRIMARY_API_SECRET_KEY_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_TESTS",
+        "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET_TESTS",
+        "TWITTER_BEARER_TOKEN_TESTS",
+    )
+    client.connect()
+    assert (
+        client.publish_images(
+            msg="Imagen usada como test desde mi GitHub",
+            files=[
+                "./tests/test_media/placeholder_testing.jpg",
+                "./tests/test_media/placeholder_testing.jpg",
+                "./tests/test_media/placeholder_testing.jpg",
+                "./tests/test_media/placeholder_testing.jpg",
+            ],
             alt_text="Alt Text",
         )
         is True
@@ -41,9 +65,9 @@ def test_twiiter_publish_image_none():
     )
     client.connect()
     assert (
-        client.publish_image(
+        client.publish_images(
             msg=None,
-            file=None,
+            files=None,
             alt_text=None,
         )
         is False
