@@ -26,9 +26,9 @@ class MastodonAPI(Api):
             client_secret=os.getenv("SECRET_MASTODON"),
         )
 
-    def publish_image(self, msg, file, alt_text):
+    def publish_images(self, msg, files: list[str], alt_text):
         image = self.client.media_post(
-            media_file=file, description=alt_text, mime_type="image/jpg"
+            media_file=files[0], description=alt_text, mime_type="image/jpg"
         )
         self.client.status_post(status=msg, media_ids=image.id)
 

@@ -23,12 +23,15 @@ def connect_to_website_images():
         return link_list
 
 
-def get_switch_images(images_url_list: list[str]) -> str:
+def get_switch_images(images_url_list: list[str]) -> list[str]:
     images_files = []
+    number_of_images = 0
     try:
         for url_image in images_url_list:
             images_files.append(get_image(url_image))
-        return images_files[0]
+            if number_of_images < 4:
+                number_of_images += 1
+        return images_files[0:number_of_images]
     except OSError as e:
         print(e)
         print("Error en la obtención de la imagen.")

@@ -24,16 +24,22 @@ from switch_media_downloader.switch.downloaders.image import (
 )
 
 # --- Hashtag of the games Dependence ---
-from .controllers.hashtag_controller import set_game_hashtag
+from switch_media_downloader.controllers.hashtag_controller import set_game_hashtag
 
 # --- Get media info Dependence ---
-from .controllers.name_file_controller import get_file_name, get_game_id
+from switch_media_downloader.controllers.name_file_controller import (
+    get_file_name,
+    get_game_id,
+)
 
 # --- Get switch video Dependence ---
-from .switch.downloaders.video import connect_to_website_video, get_video
+from switch_media_downloader.switch.downloaders.video import (
+    connect_to_website_video,
+    get_video,
+)
 
 # --- Get APIs Dependence ---
-from .controllers.publish import selectAPIs
+from switch_media_downloader.controllers.publish import selectAPIs
 
 
 class TypeMedia(Enum):
@@ -135,7 +141,7 @@ def add_hashtag_to_message(msg: str, reference_url: str, use_hashtag: bool) -> s
 
 def publish_media(
     typemedia: TypeMedia,
-    media_path: str,
+    media_paths: list[str],
     reference_url: str,
     hashtag: bool,
     social_media="",
@@ -158,9 +164,9 @@ def publish_media(
     msg = add_hashtag_to_message(msg, reference_url, hashtag)
     alt_text = ""
     if typemedia is TypeMedia.IMAGE:
-        client.publish_image(msg=msg, file=media_path, alt_text=alt_text)
+        client.publish_images(msg=msg, files=media_paths, alt_text=alt_text)
     else:
-        client.publish_video(msg=msg, file=media_path, alt_text=alt_text)
+        client.publish_videos(msg=msg, files=media_paths, alt_text=alt_text)
 
 
 def main():
@@ -191,7 +197,7 @@ def main():
                     url_list = connect_to_website_images()
                     try:
                         if url_list is not None:
-                            photo_path = get_switch_images(url_list)
+                            photo_paths = get_switch_images(url_list)
                             reference_url = url_list[0]
                             can_publish = True
                     except BaseException:
@@ -211,7 +217,7 @@ def main():
                         else:
                             social_media = ""
                             pubish_option = input(
-                                "Quieres publicar esta imagen: (y/n): "
+                                f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photo_paths)} primeras]: "
                             )
                         match pubish_option:
                             case "y":
@@ -221,7 +227,7 @@ def main():
 
                                 publish_media(
                                     TypeMedia.IMAGE,
-                                    photo_path,
+                                    photo_paths,
                                     reference_url,
                                     args.hashtag,
                                     social_media,
