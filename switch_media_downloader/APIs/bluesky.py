@@ -82,6 +82,10 @@ class BlueSky(Api):
             If the image is published
         """
         try:
+            if len(files) > 1:
+                print(
+                    "Por limitaciones de la API de Bluesky no se permite la publicación de multiples imagen en un post, se usara solo la primera."
+                )
             with open(files[0], "rb") as f:
                 photo = f.read()
                 aspect_ratio = AspectRatio(width=1280, height=720)
