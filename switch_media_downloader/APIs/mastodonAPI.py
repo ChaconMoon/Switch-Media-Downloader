@@ -27,10 +27,14 @@ class MastodonAPI(Api):
         )
 
     def publish_images(self, msg, files: list[str], alt_text):
-        image = self.client.media_post(
-            media_file=files[0], description=alt_text, mime_type="image/jpg"
-        )
-        self.client.status_post(status=msg, media_ids=image.id)
+        media_ids = []
+        for each_file in files:
+            media_ids.append(
+                self.client.media_post(
+                    media_file=each_file, description=alt_text, mime_type="image/jpg"
+                ).id
+            )
+        self.client.status_post(status=msg, media_ids=media_ids)
 
     def publish_text(self, msg):
         self.client.toot(status=msg)
