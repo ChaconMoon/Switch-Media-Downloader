@@ -70,7 +70,7 @@ class BlueSky(Api):
             print("Error a la hora de importar las credenciales")
             return None
 
-    def publish_image(self, msg: str, file: str, alt_text: str) -> bool:
+    def publish_images(self, msg: str, files: list[str], alt_text: str) -> bool:
         """
         Publish an image in your Bluesky Profile
 
@@ -82,7 +82,11 @@ class BlueSky(Api):
             If the image is published
         """
         try:
-            with open(file, "rb") as f:
+            if len(files) > 1:
+                print(
+                    "Por limitaciones de la API de Bluesky no se permite la publicación de multiples imagen en un post, se usara solo la primera."
+                )
+            with open(files[0], "rb") as f:
                 photo = f.read()
                 aspect_ratio = AspectRatio(width=1280, height=720)
 

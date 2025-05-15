@@ -26,11 +26,15 @@ class MastodonAPI(Api):
             client_secret=os.getenv("SECRET_MASTODON"),
         )
 
-    def publish_image(self, msg, file, alt_text):
-        image = self.client.media_post(
-            media_file=file, description=alt_text, mime_type="image/jpg"
-        )
-        self.client.status_post(status=msg, media_ids=image.id)
+    def publish_images(self, msg, files: list[str], alt_text):
+        media_ids = []
+        for each_file in files:
+            media_ids.append(
+                self.client.media_post(
+                    media_file=each_file, description=alt_text, mime_type="image/jpg"
+                ).id
+            )
+        self.client.status_post(status=msg, media_ids=media_ids)
 
     def publish_text(self, msg):
         self.client.toot(status=msg)
