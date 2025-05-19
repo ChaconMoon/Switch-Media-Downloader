@@ -16,9 +16,9 @@ def test_bluesky_publish_image():
     client = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
     client.connect()
     assert (
-        client.publish_image(
+        client.publish_images(
             msg="Esta imagen esta siendo usada con fines de testeo desde mi GitHub.",
-            file="./tests/test_media/placeholder_testing.jpg",
+            files=["./tests/test_media/placeholder_testing.jpg"],
             alt_text="Esta imagen esta usado con fines de testeo desde mi GitHub.",
         )
         is True
@@ -29,9 +29,9 @@ def test_bluesky_publish_image_none():
     client = BlueSky("BLUESKY_SECUNDARY_NAME", "BLUESKY_SECUNDARY_API_KEY")
     client.connect()
     assert (
-        client.publish_image(
+        client.publish_images(
             msg=None,
-            file=None,
+            files=None,
             alt_text=None,
         )
         is False

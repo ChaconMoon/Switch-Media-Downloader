@@ -33,7 +33,7 @@ class Api(ABC):
         pass
 
     @abstractmethod
-    def publish_image(self, msg: str, file: str, alt_text: str) -> bool:
+    def publish_images(self, msg: str, files: list[str], alt_text: str) -> bool:
         """
         Publish an image in this social media account
 
@@ -47,7 +47,7 @@ class Api(ABC):
         pass
 
     @abstractmethod
-    def publish_video(self, msg: str, file: str, alt_text: str) -> bool:
+    def publish_video(self, msg: str, files: str, alt_text: str) -> bool:
         """
         Publish a video in this social media account
 

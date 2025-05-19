@@ -73,21 +73,23 @@ class Twitter(Api):
         except Exception as e:
             return print(e)
 
-    def publish_image(self, msg: str, file: str, alt_text: str):
+    def publish_images(self, msg: str, files: list[str], alt_text: str):
         """
         Publish an image in your Twitter Profile or the exception
 
         Args:
             msg (str): The text of the post
-            file (str): The path of the nintendo switch's image
+            filea (list[str]): The path of the nintendo switch's images
             alt (str): The alterative text of the nintendo switch's image
         Returns:
             If the image is published
         """
 
         try:
-            photo = self.update_media(file)
-            self.client.create_tweet(text=msg, media_ids=[photo.media_id])
+            photos_ids = []
+            for file in files:
+                photos_ids.append(self.update_media(file).media_id)
+            self.client.create_tweet(text=msg, media_ids=photos_ids)
             return True
         except TypeError as e:
             print(e)
