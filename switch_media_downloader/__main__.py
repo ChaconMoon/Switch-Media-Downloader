@@ -70,14 +70,13 @@ def arguments():
     parser.add_argument(
         "--post", "--msg", type=str, help="The text of the post on the social media"
     )
-    social = parser.add_mutually_exclusive_group()
-    social.add_argument(
+    parser.add_argument(
         "-m", "--mastodon", action="store_true", help="Publish the image on mastodon"
     )
-    social.add_argument(
+    parser.add_argument(
         "-t", "--twitter", action="store_true", help="Publish the image on twitter"
     )
-    social.add_argument(
+    parser.add_argument(
         "-b", "--bluesky", action="store_true", help="Publish the image on bluesky"
     )
     parser.add_argument(
@@ -144,7 +143,7 @@ def publish_media(
     media_paths: list[str],
     reference_url: str,
     hashtag: bool,
-    social_media="",
+    social_medias: list[str],
     text="",
 ):
     """Publish the media in the social media that the user choose
@@ -156,17 +155,24 @@ def publish_media(
         >>> 'http://192.168.0.1/img/2025030913522800-A8E55523A054F56F3FE005BBD56F49A7.jpg'
 
     """
-    client = selectAPIs(option=social_media)
+    clients = []
+    if "T" in social_medias:
+        clients.append(selectAPIs(option="T"))
+    if "B" in social_medias:
+        clients.append(selectAPIs(option="B"))
+    if "M" in social_medias:
+        clients.append(selectAPIs(option="M"))
     if text == "":
         msg = input("Mensaje del post: ")
     else:
         msg = text
     msg = add_hashtag_to_message(msg, reference_url, hashtag)
     alt_text = ""
-    if typemedia is TypeMedia.IMAGE:
-        client.publish_images(msg=msg, files=media_paths, alt_text=alt_text)
-    else:
-        client.publish_videos(msg=msg, files=media_paths, alt_text=alt_text)
+    for client in clients:
+        if typemedia is TypeMedia.IMAGE:
+            client.publish_images(msg=msg, files=media_paths, alt_text=alt_text)
+        else:
+            client.publish_videos(msg=msg, files=media_paths, alt_text=alt_text)
 
 
 def main():
@@ -205,20 +211,31 @@ def main():
                     disconnect_to_swicth()
                     if can_publish:
                         print(f"Se han descargado {len(url_list)} imagenes")
+                        social_medias = []
                         if args.mastodon:
-                            social_media = "M"
+                            social_medias.append("M")
                             pubish_option = "y"
-                        elif args.twitter:
-                            social_media = "T"
+                        if args.twitter:
+                            social_medias.append("T")
                             pubish_option = "y"
-                        elif args.bluesky:
-                            social_media = "B"
+                        if args.bluesky:
+                            social_medias.append("B")
                             pubish_option = "y"
-                        else:
-                            social_media = ""
+                        if can_publish and not social_medias:
                             pubish_option = input(
                                 f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photo_paths)} primeras]: "
                             )
+                            media_list = (
+                                input(
+                                    "En que red social quieres publicarlo deben tener espacios: (T) Twitter (B) Bluesky (M) Mastodon"
+                                )
+                                .upper()
+                                .split(" ")
+                            )
+                            for letter in media_list:
+                                if letter in ("T", "B", "M"):
+                                    social_medias.append(letter)
+
                         match pubish_option:
                             case "y":
                                 post_text = ""
@@ -230,7 +247,7 @@ def main():
                                     photo_paths,
                                     reference_url,
                                     args.hashtag,
-                                    social_media,
+                                    social_medias,
                                     text=post_text,
                                 )
 
@@ -243,32 +260,44 @@ def main():
                         pass
                     disconnect_to_swicth()
                     if can_publish:
+                        social_medias = []
                         if args.mastodon:
-                            social_media = "M"
+                            social_medias.append("M")
                             pubish_option = "y"
-                        elif args.twitter:
-                            social_media = "T"
+                        if args.twitter:
+                            social_medias.append("T")
                             pubish_option = "y"
-                        elif args.bluesky:
-                            social_media = "B"
+                        if args.bluesky:
+                            social_medias.append("B")
                             pubish_option = "y"
-                        else:
-                            social_media = ""
-                            pubish_option = input("Quieres publicar este video: (y/n)")
+
+                        if can_publish and not social_medias:
+                            pubish_option = input(
+                                f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photo_paths)} primeras]: "
+                            )
+                            media_list = (
+                                input(
+                                    "En que red social quieres publicarlo deben tener espacios: (T) Twitter (B) Bluesky (M) Mastodon"
+                                )
+                                .upper()
+                                .split(" ")
+                            )
+                            for letter in media_list:
+                                if letter in ("T", "B", "M"):
+                                    social_medias.append(letter)
+
                         match pubish_option:
                             case "y":
                                 post_text = ""
                                 if args.post is not None:
                                     post_text = args.post
 
-                        match pubish_option:
-                            case "y":
                                 publish_media(
                                     TypeMedia.VIDEO,
                                     video_path,
                                     link_video,
                                     args.hashtag,
-                                    social_media,
+                                    social_medias,
                                     text=post_text,
                                 )
         else:
