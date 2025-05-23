@@ -205,7 +205,6 @@ def get_media_type(arg_video: bool, arg_image: bool):
 def get_social_medias(
     args_mastodon: bool, args_twitter: bool, args_bluesky: bool, photos
 ):
-    can_publish = False
     social_medias = []
     if args_mastodon:
         social_medias.append("M")
@@ -213,11 +212,14 @@ def get_social_medias(
         social_medias.append("T")
     if args_bluesky:
         social_medias.append("B")
-    if can_publish and not social_medias:
-        if input(
-            f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photos)} primeras]: "
+    if not social_medias:
+        if (
+            input(
+                f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photos)} primeras]: "
+            )
+            != "y"
         ):
-            return
+            return None
         media_list = (
             input(
                 "En que red social quieres publicarlo deben tener espacios: (T) Twitter (B) Bluesky (M) Mastodon"
@@ -281,14 +283,15 @@ def main():
                     args.mastodon, args.twitter, args.bluesky, photo_paths
                 )
 
-                post_in_social_media(
-                    social_medias,
-                    args.post,
-                    TypeMedia.IMAGE,
-                    photo_paths,
-                    reference_url,
-                    args.hashtag,
-                )
+                if social_medias is not None:
+                    post_in_social_media(
+                        social_medias,
+                        args.post,
+                        TypeMedia.IMAGE,
+                        photo_paths,
+                        reference_url,
+                        args.hashtag,
+                    )
 
         case TypeMedia.VIDEO.name:
             link_video = connect_to_website_video()
@@ -304,14 +307,15 @@ def main():
                 args.mastodon, args.twitter, args.bluesky, video_path
             )
 
-            post_in_social_media(
-                social_medias,
-                args.post,
-                TypeMedia.VIDEO,
-                video_path,
-                link_video,
-                args.hashtag,
-            )
+            if social_medias is not None:
+                post_in_social_media(
+                    social_medias,
+                    args.post,
+                    TypeMedia.VIDEO,
+                    video_path,
+                    link_video,
+                    args.hashtag,
+                )
 
 
 if __name__ == "__main__":
