@@ -1,10 +1,6 @@
 # Visual Studio Code 
 .vscode/
 
-# Media 
-img/
-video/
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
