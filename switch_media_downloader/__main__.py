@@ -70,14 +70,13 @@ def arguments():
     parser.add_argument(
         "--post", "--msg", type=str, help="The text of the post on the social media"
     )
-    social = parser.add_mutually_exclusive_group()
-    social.add_argument(
+    parser.add_argument(
         "-m", "--mastodon", action="store_true", help="Publish the image on mastodon"
     )
-    social.add_argument(
+    parser.add_argument(
         "-t", "--twitter", action="store_true", help="Publish the image on twitter"
     )
-    social.add_argument(
+    parser.add_argument(
         "-b", "--bluesky", action="store_true", help="Publish the image on bluesky"
     )
     parser.add_argument(
@@ -144,7 +143,7 @@ def publish_media(
     media_paths: list[str],
     reference_url: str,
     hashtag: bool,
-    social_media="",
+    social_medias: list[str],
     text="",
 ):
     """Publish the media in the social media that the user choose
@@ -156,17 +155,104 @@ def publish_media(
         >>> 'http://192.168.0.1/img/2025030913522800-A8E55523A054F56F3FE005BBD56F49A7.jpg'
 
     """
-    client = selectAPIs(option=social_media)
+    clients = []
+    if "T" in social_medias:
+        clients.append(selectAPIs(option="T"))
+    if "B" in social_medias:
+        clients.append(selectAPIs(option="B"))
+    if "M" in social_medias:
+        clients.append(selectAPIs(option="M"))
     if text == "":
         msg = input("Mensaje del post: ")
     else:
         msg = text
     msg = add_hashtag_to_message(msg, reference_url, hashtag)
     alt_text = ""
-    if typemedia is TypeMedia.IMAGE:
-        client.publish_images(msg=msg, files=media_paths, alt_text=alt_text)
+    for client in clients:
+        if typemedia is TypeMedia.IMAGE:
+            client.publish_images(msg=msg, files=media_paths, alt_text=alt_text)
+        else:
+            client.publish_video(
+                msg=msg, file=media_paths[0].replace("/", "\\"), alt_text=alt_text
+            )
+    return ""
+
+
+def start_connection_to_switch(password: str):
+    wifi = get_switch_network()
+    if wifi is not None:
+        if password is None:
+            print(f"Wifi Switch = {wifi}")
+            password = input("Contraseña Wifi Switch: ")
+        else:
+            password = password
+        return connect_to_switch(wifi, password)
     else:
-        client.publish_videos(msg=msg, files=media_paths, alt_text=alt_text)
+        print("No hay una red Wifi correspondiente a una Nintendo Switch")
+        return False
+
+
+def get_media_type(arg_video: bool, arg_image: bool):
+    if arg_video:
+        type_media = "VIDEO"
+    elif arg_image:
+        type_media = "IMAGE"
+    else:
+        type_media = input("Indique el contenido a descargar: (IMAGE/VIDEO): ")
+    return type_media
+
+
+def get_social_medias(
+    args_mastodon: bool, args_twitter: bool, args_bluesky: bool, photos
+):
+    social_medias = []
+    if args_mastodon:
+        social_medias.append("M")
+    if args_twitter:
+        social_medias.append("T")
+    if args_bluesky:
+        social_medias.append("B")
+    if not social_medias:
+        if (
+            input(
+                f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photos)} primeras]: "
+            )
+            != "y"
+        ):
+            return None
+        media_list = (
+            input(
+                "En que red social quieres publicarlo deben tener espacios: (T) Twitter (B) Bluesky (M) Mastodon"
+            )
+            .upper()
+            .split(" ")
+        )
+        for letter in media_list:
+            if letter in ("T", "B", "M"):
+                social_medias.append(letter)
+    return social_medias
+
+
+def post_in_social_media(
+    social_medias: list,
+    post_text: str,
+    media_type: TypeMedia,
+    media_paths: list,
+    reference_url: str,
+    hashtag: str,
+):
+    if social_medias is not None:
+        if post_text is None:
+            post_text = ""
+
+        publish_media(
+            media_type,
+            media_paths,
+            reference_url,
+            hashtag,
+            social_medias,
+            text=post_text,
+        )
 
 
 def main():
@@ -175,106 +261,61 @@ def main():
     """
     args = arguments()
     display_logo()
-    can_publish = False
-    wifi = get_switch_network()
-    if wifi is not None:
-        if args.password is None:
-            print(f"Wifi Switch = {wifi}")
-            password = input("Contraseña Wifi Switch: ")
-        else:
-            password = args.password
 
-        if connect_to_switch(wifi, password):
-            if args.video:
-                type_media = "VIDEO"
-            elif args.image:
-                type_media = "IMAGE"
-            else:
-                type_media = input("Indique el contenido a descargar: (IMAGE/VIDEO): ")
+    if not start_connection_to_switch(password=args.password):
+        exit()
 
-            match type_media:
-                case TypeMedia.IMAGE.name:
-                    url_list = connect_to_website_images()
-                    try:
-                        if url_list is not None:
-                            photo_paths = get_switch_images(url_list)
-                            reference_url = url_list[0]
-                            can_publish = True
-                    except BaseException:
-                        pass
-                    disconnect_to_swicth()
-                    if can_publish:
-                        print(f"Se han descargado {len(url_list)} imagenes")
-                        if args.mastodon:
-                            social_media = "M"
-                            pubish_option = "y"
-                        elif args.twitter:
-                            social_media = "T"
-                            pubish_option = "y"
-                        elif args.bluesky:
-                            social_media = "B"
-                            pubish_option = "y"
-                        else:
-                            social_media = ""
-                            pubish_option = input(
-                                f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photo_paths)} primeras]: "
-                            )
-                        match pubish_option:
-                            case "y":
-                                post_text = ""
-                                if args.post is not None:
-                                    post_text = args.post
+    match get_media_type(args.video, args.image):
+        case TypeMedia.IMAGE.name:
+            url_list = connect_to_website_images()
+            try:
+                if url_list is not None:
+                    photo_paths = get_switch_images(url_list)
+                    reference_url = url_list[0]
+                    can_publish = True
+            except BaseException:
+                pass
+            disconnect_to_swicth()
+            if can_publish:
+                print(f"Se han descargado {len(url_list)} imagenes")
 
-                                publish_media(
-                                    TypeMedia.IMAGE,
-                                    photo_paths,
-                                    reference_url,
-                                    args.hashtag,
-                                    social_media,
-                                    text=post_text,
-                                )
+                social_medias = get_social_medias(
+                    args.mastodon, args.twitter, args.bluesky, photo_paths
+                )
 
-                case TypeMedia.VIDEO.name:
-                    link_video = connect_to_website_video()
-                    try:
-                        video_path = get_video(link_video)
-                        can_publish = True
-                    except BaseException:
-                        pass
-                    disconnect_to_swicth()
-                    if can_publish:
-                        if args.mastodon:
-                            social_media = "M"
-                            pubish_option = "y"
-                        elif args.twitter:
-                            social_media = "T"
-                            pubish_option = "y"
-                        elif args.bluesky:
-                            social_media = "B"
-                            pubish_option = "y"
-                        else:
-                            social_media = ""
-                            pubish_option = input("Quieres publicar este video: (y/n)")
-                        match pubish_option:
-                            case "y":
-                                post_text = ""
-                                if args.post is not None:
-                                    post_text = args.post
+                if social_medias is not None:
+                    post_in_social_media(
+                        social_medias,
+                        args.post,
+                        TypeMedia.IMAGE,
+                        photo_paths,
+                        reference_url,
+                        args.hashtag,
+                    )
 
-                        match pubish_option:
-                            case "y":
-                                publish_media(
-                                    TypeMedia.VIDEO,
-                                    video_path,
-                                    link_video,
-                                    args.hashtag,
-                                    social_media,
-                                    text=post_text,
-                                )
-        else:
-            print("No se ha podido descargar nada de la switch ")
-    else:
-        print("No hay una red Wifi correspondiente a una Nintendo Switch")
+        case TypeMedia.VIDEO.name:
+            link_video = connect_to_website_video()
+            video_path = []
+            try:
+                video_path.append(get_video(link_video))
+                can_publish = True
+            except BaseException:
+                pass
+            disconnect_to_swicth()
+
+            social_medias = get_social_medias(
+                args.mastodon, args.twitter, args.bluesky, video_path
+            )
+
+            if social_medias is not None:
+                post_in_social_media(
+                    social_medias,
+                    args.post,
+                    TypeMedia.VIDEO,
+                    video_path,
+                    link_video,
+                    args.hashtag,
+                )
 
 
 if __name__ == "__main__":
