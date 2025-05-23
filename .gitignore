@@ -1,9 +1,12 @@
 # Visual Studio Code 
 .vscode/
+<<<<<<< HEAD
 
 # Media 
 img/
 video/
+=======
+>>>>>>> 5e9a7aa (Remove media folders from .gitignore)
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
