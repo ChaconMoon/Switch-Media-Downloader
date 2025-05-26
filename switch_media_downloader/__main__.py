@@ -227,7 +227,11 @@ def get_media_type(arg_video: bool, arg_image: bool):
 
 
 def get_social_medias(
-        args_mastodon: bool, args_twitter: bool, args_bluesky: bool, photos: list[str]
+        args_mastodon: bool,
+        args_twitter: bool,
+        args_bluesky: bool,
+        photos: list[str],
+        typemedia: TypeMedia,
 ):
         social_medias = []
         if args_mastodon:
@@ -237,13 +241,17 @@ def get_social_medias(
         if args_bluesky:
                 social_medias.append("B")
         if not social_medias:
-                if (
-                        input(
-                                f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photos)} primeras]: "
-                        )
-                        != "y"
-                ):
-                        return None
+                if typemedia is TypeMedia.IMAGE:
+                        if (
+                                input(
+                                        f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photos)} primeras]: "
+                                )
+                                != "y"
+                        ):
+                                return None
+                else:
+                        if input("Quieres publicar este video: (y/n) ") != "y":
+                                return None
                 media_list = (
                         input(
                                 "En que red social quieres publicarlo deben tener espacios: (T) Twitter (B) Bluesky (M) Mastodon"
@@ -308,6 +316,7 @@ def main():
                                         args.twitter,
                                         args.bluesky,
                                         photo_paths,
+                                        TypeMedia.IMAGE,
                                 )
 
                                 if social_medias is not None:
@@ -331,7 +340,11 @@ def main():
                         disconnect_to_swicth()
 
                         social_medias = get_social_medias(
-                                args.mastodon, args.twitter, args.bluesky, video_path
+                                args.mastodon,
+                                args.twitter,
+                                args.bluesky,
+                                video_path,
+                                TypeMedia.VIDEO,
                         )
 
                         if social_medias is not None:
