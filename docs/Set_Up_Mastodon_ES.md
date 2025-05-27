@@ -10,17 +10,19 @@ Enlace de ejemplo:
 
 Al crear la aplicación rellena el formulario con el seguiente: 
 
-Nombre de la aplicación: Puedes poner el nombre que quieras pero agrdeceria que uses el nombre del proyecto ``Switch_Media_Downloader``, este nombre se vera en todos los post que hagas con la aplicación.
+Nombre de la aplicación: Puedes poner el nombre que quieras pero agrdeceria que uses el nombre del proyecto ``Switch Media Downloader``, este nombre se vera en todos los post que hagas con la aplicación.
+
+__Ejemplo:__
 
 ![alt text](../.github/img/Example_Mastodon_Post.png)
 
 En los permisos de la aplicación marca los siguientes:
 
-[x] read (Leer información de la cuenta)
+[ x ] read (Leer información de la cuenta)
 
-[x] profile (Leer información del perfil)
+[ x ] profile (Leer información del perfil)
 
-[x] write (Publicar en tu nombre)
+[ x ] write (Publicar en tu nombre)
 
 Guarda los cambios y vuelve a acceder y obtendras las claves de acceso.
 
