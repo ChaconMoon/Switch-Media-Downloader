@@ -76,17 +76,17 @@ Este programa puede usarse con parametros para automatizar su ejecución o con u
 Estos son los parametros que se le pueden pasar al programa para automatizar su funcionamiento.
 
 ```
-| Parámetro       | Descripción                                                                 |
-|-----------------|-----------------------------------------------------------------------------|
-| `-h`, `--help`  | Muestra los parámetros disponibles                                          |
-| `-p`, `--password` | Contraseña de la red Wi-Fi                                               |
-| `-v`, `--video` | Descarga un video (mutuamente excluyente con `--image`)                    |
-| `-i`, `--image` | Descarga imágenes (mutuamente excluyente con `--video`)                    |
-| `--post`, `--msg` | Texto del post para redes sociales                                       |
-| `-m`, `--mastodon` | Publica en Mastodon                                                     |
-| `-t`, `--twitter` | Publica en Twitter (X)                                                   |
-| `-b`, `--bluesky` | Publica en Bluesky                                                       |
-| `--hashtag`     | Hashtag a incluir en la publicación si está definido                       |
+| Parámetro          | Descripción                                                  |
+|--------------------|--------------------------------------------------------------|
+| `-h`, `--help`     | Muestra los parámetros disponibles                           |
+| `-p`, `--password` | Contraseña de la red Wi-Fi                                   |
+| `-v`, `--video`    | Descarga un video (mutuamente excluyente con `--image`)      |
+| `-i`, `--image`    | Descarga imágenes (mutuamente excluyente con `--video`)      |
+| `--post`, `--msg`  | Texto del post para redes sociales                           |
+| `-m`, `--mastodon` | Publica en Mastodon                                          |
+| `-t`, `--twitter`  | Publica en Twitter (X)                                       |
+| `-b`, `--bluesky`  | Publica en Bluesky                                           |
+| `--hashtag`        | Hashtag a incluir en la publicación si está definido         |
 
 ```
 
