@@ -5,7 +5,7 @@
 ---
 
 # Switch Media Downloader
-
+__[English README](README.md)__
 Un programa de Python para descargar capturas de la consola Nintendo Switch.
 
 Este programa utiliza la función de descargar capturas de un sistema Nintendo Switch a traves del Wi-Fi para automatizar el proceso y organizarlas automaticamente, estas se descargaran en el directorio de Pictures de tu usuario.
@@ -14,7 +14,7 @@ Ademas usando las APIs de Twitter, Mastodon y BlueSky permite publicar las captu
 
 ## Indice
 
-### [Estructura del programa.](./docs/Structure_ES.md)
+### [Estructura del programa.](./docs/Structure.md)
 ### [Instalación y Guia de uso.](./docs/Getting_Started_ES.md)
 ### [Uso con redes sociales.](./docs/Getting_Started_Social_Media_ES.md)
 
