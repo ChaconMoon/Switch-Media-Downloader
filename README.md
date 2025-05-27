@@ -17,3 +17,6 @@ Ademas usando las APIs de Twitter, Mastodon y BlueSky permite publicar las captu
 ### [Estructura del programa.](./docs/Structure_ES.md)
 ### [Instalación y Guia de uso.](./docs/Getting_Started_ES.md)
 ### [Uso con redes sociales.](./docs/Getting_Started_Social_Media_ES.md)
+
+### Repositorios usados durante el desarrollo:
+Para obtener un listado de los IDs de los juegos de Nintendo Switch: https://github.com/RenanGreca/Switch-Screenshots
