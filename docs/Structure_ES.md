@@ -1,43 +1,43 @@
 ## Program Structure
 ```
 Switch-Media-Downloader
-    ├── LICENSE
-    ├── README.md
-    ├── poetry.lock
-    ├── pyproject.toml
-    ├── pytest.ini
-    ├── switch_media_downloader
-    │   ├── APIs
+    ├── LICENSE # LICENCE Document
+    ├── README.md # README
+    ├── poetry.lock # Poetry Lock file
+    ├── pyproject.toml # Project Config
+    ├── pytest.ini # Pytest config
+    ├── switch_media_downloader # Module Folder
+    │   ├── APIs # Social Media APis Module
     │   │   ├── __init__.py
     │   │   ├── api.py
     │   │   ├── bluesky.py
     │   │   ├── mastodonAPI.py
     │   │   └── twitter.py
     │   ├── __init__.py
-    │   ├── __main__.py
-    │   ├── controllers
+    │   ├── __main__.py # Project Main Module
+    │   ├── controllers # File Downloader controller
     │   │   ├── __init__.py
     │   │   ├── downloads.py
     │   │   ├── hashtag_controller.py
     │   │   ├── name_file_controller.py
     │   │   ├── publish.py
-    │   │   └── selenium
+    │   │   └── selenium # Selenium Module
     │   │       ├── __init__.py
     │   │       ├── edge.py
     │   │       ├── firefox.py
     │   │       └── web_browser.py
-    │   ├── data
+    │   ├── data # Game Data Folder
     │   │   ├── game_hashtag_en.json
     │   │   ├── game_hashtag_es.json
     │   │   └── game_titles.json
-    │   └── switch
+    │   └── switch # Switch Connector Modulw
     │       ├── __init__.py
     │       ├── connector.py
     │       └── downloaders
     │           ├── __init__.py
     │           ├── image.py
     │           └── video.py
-    └── tests
+    └── tests # Test Folder
         ├── implementation_tests
         │   ├── test_bluesky_API.py
         │   ├── test_downloads.py
