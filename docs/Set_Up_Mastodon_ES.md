@@ -6,7 +6,7 @@ Enlace de ejemplo:
 
 ``https://[Tu_instacia_de_Mastodon]/settings/applications``
 
-![alt text](../.github/img/Create_Application_Mastodon.png)
+![](../.github/img/Create_Application_Mastodon.png)
 
 Al crear la aplicación rellena el formulario con el seguiente: 
 
@@ -14,7 +14,7 @@ Nombre de la aplicación: Puedes poner el nombre que quieras pero agrdeceria que
 
 __Ejemplo:__
 
-![alt text](../.github/img/Example_Mastodon_Post.png)
+![](../.github/img/Example_Mastodon_Post.png)
 
 En los permisos de la aplicación marca los siguientes:
 
@@ -26,10 +26,10 @@ En los permisos de la aplicación marca los siguientes:
 
 Guarda los cambios y vuelve a acceder y obtendras las claves de acceso.
 
-![alt text](../.github/img/Generate_API_Key_Mastodon.png)
+![](../.github/img/Generate_API_Key_Mastodon.png)
 
 En el fichero .env_example pega esas credenciales en la sección de Mastodon junto con el nombre de tu instancia.
 
-![alt text](../.github/img/Paste_API_KEY_Mastodon.png)
+![](../.github/img/Paste_API_KEY_Mastodon.png)
 
 Por ultimo renombra el fichero a ``.env`` si no lo has hecho antes.

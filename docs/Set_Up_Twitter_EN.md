@@ -8,11 +8,11 @@ This application must have the following permissions:
 
 In the application permissions, you must allow read and write access to your account.
 
-![alt text](../.github/img/App_Permissions_Twitter.png)
+![](../.github/img/App_Permissions_Twitter.png)
 
 And for the application type, create an Automation App or a bot.
 
-![alt text](../.github/img/Type_Of_App_Twitter.png)
+![](../.github/img/Type_Of_App_Twitter.png)
 
 Fill in the App information and provide a website as information for the App.
 

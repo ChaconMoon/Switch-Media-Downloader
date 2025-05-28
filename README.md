@@ -8,7 +8,7 @@
 
 __[Spanish README](README_ES.md)__
 
-A Python program to download screenshots from the Nintendo Switch console.
+A Python program to download screenshots and videos from the Nintendo Switch console.
 
 This program uses the Nintendo Switch system's screenshot download feature via Wi-Fi to automate the process and organize them automatically. The screenshots will be downloaded to your user's Pictures directory.
 

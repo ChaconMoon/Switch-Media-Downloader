@@ -1,4 +1,5 @@
 # Configuración y uso de las cuentas en redes sociales.
+
 Las imagenes y videos descargadas pueden ser publicadas directamente desde el programa usando las APIs de Twitter, Mastodon y BlueSky cada una con sus limitaciones.
 
 Estas son las limitaciones de las redes sociales disponibles.
