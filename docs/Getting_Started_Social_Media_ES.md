@@ -1,9 +1,10 @@
 # Configuración y uso de las cuentas en redes sociales.
+
 Las imagenes y videos descargadas pueden ser publicadas directamente desde el programa usando las APIs de Twitter, Mastodon y BlueSky cada una con sus limitaciones.
 
 Estas son las limitaciones de las redes sociales disponibles.
 
-Twitter: Maximo 240 caracteres, cuatro imagenes o un video.
+Twitter: Maximo 240 caracteres, cuatro imagenes o un video y limitado a unos 30 posts al dia con la versión gratuita de la API.
 
 Mastodon: Maximo 5000 caracteres, cuatro imagenes o un video.
 

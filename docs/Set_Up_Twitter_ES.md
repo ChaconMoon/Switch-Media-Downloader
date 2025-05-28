@@ -2,17 +2,17 @@
 
 Para publicar en Twitter debes darte de alta como desarrollador en Twitter y crear un nuevo proyecto. 
 
-[Enlace](https://developer.x.com/en/portal/projects-and-apps)
+[](https://developer.x.com/en/portal/projects-and-apps)
 
 Esta aplicación debe tener los siguientes permisos:
 
 En permisos de aplicación debes permitir leer y escribir en tu cuenta.
 
-![alt text](../.github/img/App_Permissions_Twitter.png)
+![](../.github/img/App_Permissions_Twitter.png)
 
 Y en el tipo de aplicación crea una App de Automatización o un bot.
 
-![alt text](../.github/img/Type_Of_App_Twitter.png)
+![](../.github/img/Type_Of_App_Twitter.png)
 
 Y la información de la App y pon un sitio web como información para la App.
 

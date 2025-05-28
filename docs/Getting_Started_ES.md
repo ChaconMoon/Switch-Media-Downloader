@@ -4,7 +4,7 @@ Este documento contiene una guia sobre la instalación y uso basico del programa
 
 ## Requisitos:
 
-Sistema con Windows y Python de 3.12.5 a 3.13 (No funciona en Linux por problemas de privilegios debido a que para trabajar con las interfaces de red en Linux hacen falta privilegios de administrador y no quiero pedir un superusuario para este programa).
+Sistema con Windows y Python de 3.12.5 a 3.13 (*No funciona en Linux por problemas de privilegios debido a que para trabajar con las interfaces de red en Linux hacen falta privilegios de administrador y no quiero pedir un superusuario para este programa*).
 
 Poetry versión 2.1.1 o superior [Enlace de instalación](https://python-poetry.org/docs/)
 
@@ -76,17 +76,17 @@ Este programa puede usarse con parametros para automatizar su ejecución o con u
 Estos son los parametros que se le pueden pasar al programa para automatizar su funcionamiento.
 
 ```
-| Parámetro       | Descripción                                                                 |
-|-----------------|-----------------------------------------------------------------------------|
-| `-h`, `--help`  | Muestra los parámetros disponibles                                          |
-| `-p`, `--password` | Contraseña de la red Wi-Fi                                               |
-| `-v`, `--video` | Descarga un video (mutuamente excluyente con `--image`)                    |
-| `-i`, `--image` | Descarga imágenes (mutuamente excluyente con `--video`)                    |
-| `--post`, `--msg` | Texto del post para redes sociales                                       |
-| `-m`, `--mastodon` | Publica en Mastodon                                                     |
-| `-t`, `--twitter` | Publica en Twitter (X)                                                   |
-| `-b`, `--bluesky` | Publica en Bluesky                                                       |
-| `--hashtag`     | Hashtag a incluir en la publicación si está definido                       |
+| Parámetro          | Descripción                                                  |
+|--------------------|--------------------------------------------------------------|
+| `-h`, `--help`     | Muestra los parámetros disponibles                           |
+| `-p`, `--password` | Contraseña de la red Wi-Fi                                   |
+| `-v`, `--video`    | Descarga un video (mutuamente excluyente con `--image`)      |
+| `-i`, `--image`    | Descarga imágenes (mutuamente excluyente con `--video`)      |
+| `--post`, `--msg`  | Texto del post para redes sociales                           |
+| `-m`, `--mastodon` | Publica en Mastodon                                          |
+| `-t`, `--twitter`  | Publica en Twitter (X)                                       |
+| `-b`, `--bluesky`  | Publica en Bluesky                                           |
+| `--hashtag`        | Hashtag a incluir en la publicación si está definido         |
 
 ```
 
@@ -96,7 +96,7 @@ Ejemplo de uso:
 python -m switch_media_downloader -p dif875n7 -v --post "Poco a poco voy aprendiendo a luchar mejor, es mejor no jugarsela en un duelo de piedra-papel-tijera" -b --hashtag
 ```
 
-Este ejemplo establece que la contraseña de la switch es dif875n7, que tiene que descargar un video y que debe publicarla en bluesky con el siguiente texto: Poco a poco voy aprendiendo a luchar mejor, es mejor no jugarsela en un duelo de piedra-papel-tijera #Nombredeljuego
+Este ejemplo establece que la contraseña de la switch es dif875n7, que tiene que descargar un video y que debe publicarla en bluesky con el siguiente texto: *Poco a poco voy aprendiendo a luchar mejor, es mejor no jugarsela en un duelo de piedra-papel-tijera #Nombredeljuego*
 
 ![](../.github/img/examples/Execution_With_Params_Example.png)
 ### Sin parametros.
