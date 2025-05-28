@@ -22,6 +22,7 @@ from dotenv import load_dotenv
 
 # --- load Apis module
 from switch_media_downloader.APIs.api import Api
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
 class BlueSky(Api):
@@ -59,15 +60,31 @@ class BlueSky(Api):
 
                 """
                 try:
-                        print("Conectando...")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_connection_text_1"
+                                )
+                        )
                         self.client.login(self.account, self.token)
-                        print("Conexion exitosa")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_connection_text_2"
+                                )
+                        )
                         return True
                 except AtProtocolError:
-                        print("Error en el inicio de sesión en BlueSky")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_session_error_text"
+                                )
+                        )
                         return False
                 except ValueError:
-                        print("Error a la hora de importar las credenciales")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_credential_import_error_text"
+                                )
+                        )
                         return None
 
         def publish_images(self, msg: str, files: list[str], alt_text: str) -> bool:
@@ -85,7 +102,9 @@ class BlueSky(Api):
                 try:
                         if len(files) > 1:
                                 print(
-                                        "Por limitaciones de la API de Bluesky no se permite la publicación de multiples imagen en un post, se usara solo la primera."
+                                        StringLocalization().get_localizated_string(
+                                                "bluesky_limitation_text"
+                                        )
                                 )
                         with open(files[0], "rb") as f:
                                 photo = f.read()
@@ -99,10 +118,18 @@ class BlueSky(Api):
                         )
                         return True
                 except AtProtocolError:
-                        print("Error en ATProto, la imagen no ha sido publica")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_ATProtocol_Error_text_image"
+                                )
+                        )
                         return False
                 except TypeError:
-                        print("Error de tipo")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "typeError_text"
+                                )
+                        )
                         return False
 
         def publish_video(self, msg: str, file: str, alt_text: str) -> bool:
@@ -130,10 +157,18 @@ class BlueSky(Api):
                         )
                         return True
                 except AtProtocolError:
-                        print("Error en ATProto, el video no se ha publicado")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_ATProtocol_Error_text_video"
+                                )
+                        )
                         return False
                 except TypeError:
-                        print("Error de tipo")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "typeError_text"
+                                )
+                        )
                         return False
 
         def publish_text():

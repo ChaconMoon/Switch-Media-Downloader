@@ -41,6 +41,10 @@ from switch_media_downloader.switch.downloaders.video import (
         connect_to_website_video,
         get_video,
 )
+from switch_media_downloader.controllers.lenguages_settings_controller import (
+        LenguagesController,
+)
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
 class TypeMedia(Enum):
@@ -144,11 +148,17 @@ def add_hashtag_to_message(msg: str, reference_url: str, use_hashtag: bool) -> s
         game_hashtag = set_game_hashtag(get_game_id(get_file_name(reference_url)))
         if game_hashtag is not None:
                 if use_hashtag:
-                        print(f"Se usara el siguiente hashtag {game_hashtag} ")
+                        print(
+                                StringLocalization()
+                                .get_localizated_string("hashtag_found_text")
+                                .format(game_hashtag)
+                        )
                         return f"{msg} {game_hashtag}"
-                elif (
+                if (
                         input(
-                                f"Se ha encontrado el siguiente hashtag {game_hashtag} ¿Quieres usarlo? (y/n): "
+                                StringLocalization()
+                                .get_localizated_string("hashtag_found_question_text")
+                                .format(game_hashtag)
                         )
                         == "y"
                 ):
@@ -183,7 +193,11 @@ def publish_media(
         if "M" in social_medias:
                 clients.append(selectAPIs(option="M"))
         if text == "":
-                msg = input("Mensaje del post: ")
+                msg = input(
+                        StringLocalization().get_localizated_string(
+                                "posting_message_input_text"
+                        )
+                )
         else:
                 msg = text
         msg = add_hashtag_to_message(msg, reference_url, hashtag)
@@ -206,14 +220,21 @@ def start_connection_to_switch(password: str):
         wifi = get_switch_network()
         if wifi is not None:
                 if password is None:
-                        print(f"Wifi Switch = {wifi}")
-                        password = input("Contraseña Wifi Switch: ")
+                        print(
+                                StringLocalization()
+                                .get_localizated_string("switch_show_wifi_text")
+                                .format(wifi)
+                        )
+                        password = input(
+                                StringLocalization()
+                                .get_localizated_string("switch_get_password")
+                                .format(wifi)
+                        )
                 else:
                         password = password
                 return connect_to_switch(wifi, password)
-        else:
-                print("No hay una red Wifi correspondiente a una Nintendo Switch")
-                return False
+        print(StringLocalization().get_localizated_string("switch_no_wifi_error_text"))
+        return False
 
 
 def get_media_type(arg_video: bool, arg_image: bool):
@@ -222,7 +243,11 @@ def get_media_type(arg_video: bool, arg_image: bool):
         elif arg_image:
                 type_media = "IMAGE"
         else:
-                type_media = input("Indique el contenido a descargar: (IMAGE/VIDEO): ")
+                type_media = input(
+                        StringLocalization().get_localizated_string(
+                                "downloading_media_select_type_text"
+                        )
+                )
         return type_media
 
 
@@ -244,17 +269,30 @@ def get_social_medias(
                 if typemedia is TypeMedia.IMAGE:
                         if (
                                 input(
-                                        f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photos)} primeras]: "
+                                        StringLocalization()
+                                        .get_localizated_string(
+                                                "posting_images_input_text"
+                                        )
+                                        .format(len(photos))
                                 )
                                 != "y"
                         ):
                                 return None
                 else:
-                        if input("Quieres publicar este video: (y/n) ") != "y":
+                        if (
+                                input(
+                                        StringLocalization().get_localizated_string(
+                                                "posting_video_input_text"
+                                        )
+                                )
+                                != "y"
+                        ):
                                 return None
                 media_list = (
                         input(
-                                "En que red social quieres publicarlo deben tener espacios: (T) Twitter (B) Bluesky (M) Mastodon"
+                                StringLocalization().get_localizated_string(
+                                        "posting_select_social_media_input_text"
+                                )
                         )
                         .upper()
                         .split(" ")
@@ -309,7 +347,13 @@ def main():
                                 pass
                         disconnect_to_swicth()
                         if can_publish:
-                                print(f"Se han descargado {len(url_list)} imagenes")
+                                print(
+                                        StringLocalization()
+                                        .get_localizated_string(
+                                                "download_finish_images_text"
+                                        )
+                                        .format(len(url_list))
+                                )
 
                                 social_medias = get_social_medias(
                                         args.mastodon,

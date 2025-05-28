@@ -22,6 +22,7 @@ from tweepy.models import Media
 
 # --- Import API interface module
 from switch_media_downloader.APIs.api import Api
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
 class Twitter(Api):
@@ -53,7 +54,11 @@ class Twitter(Api):
 
                 """
                 try:
-                        print("Conectando con Twitter (X)")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "twitter_connection_text"
+                                )
+                        )
                         self.client = tweepy.Client(
                                 consumer_key=self.primary_key,
                                 consumer_secret=self.secret_key,
@@ -118,7 +123,11 @@ class Twitter(Api):
                         self.client.create_tweet(text=msg, media_ids=[video.media_id])
                         return True
                 except TypeError:
-                        print("Error de tipo")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "typeError_text"
+                                )
+                        )
                         return False
                 except AttributeError as e:
                         print(e)

@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 
 from switch_media_downloader.controllers.downloads import download_file
 from switch_media_downloader.controllers.selenium.firefox import Firefox
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
 def connect_to_website_images():
@@ -36,10 +37,18 @@ def get_switch_images(images_url_list: list[str]) -> list[str]:
                 return images_files[0:number_of_images]
         except OSError as e:
                 print(e)
-                print("Error en la obtención de la imagen.")
+                print(
+                        StringLocalization().get_localizated_string(
+                                "image_downloading_error_text"
+                        )
+                )
                 return None
         except BlockingIOError:
-                print("Error en la escritura de la imagen")
+                print(
+                        StringLocalization().get_localizated_string(
+                                "image_writting_error_text"
+                        )
+                )
                 return None
 
 

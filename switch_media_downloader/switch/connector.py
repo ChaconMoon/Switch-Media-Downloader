@@ -4,6 +4,8 @@ import pywifi
 import pywifi.iface
 from pywifi import Profile, const
 
+from switch_media_downloader.controllers.string_localization import StringLocalization
+
 
 def get_switch_network() -> str:
         wifi = pywifi.PyWiFi()
@@ -34,7 +36,11 @@ def connect_to_switch(ssid: str, password: str) -> bool:
                         iface.connect(network_profile)
                         while iface.status() != const.IFACE_CONNECTED:
                                 time.sleep(0.3)
-                        print("Switch Connected")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "switch_connection_enter_text"
+                                )
+                        )
                         return True
         return False
 
@@ -42,6 +48,6 @@ def connect_to_switch(ssid: str, password: str) -> bool:
 def disconnect_to_swicth():
         wifi = pywifi.PyWiFi()
         iface: pywifi.iface.Interface = wifi.interfaces()[0]
-        print("Disconnecting Switch")
+        print(StringLocalization().get_localizated_string("switch_connection_exit_text"))
         iface.disconnect()
         return True

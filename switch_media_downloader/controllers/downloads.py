@@ -9,6 +9,7 @@ from switch_media_downloader.controllers.name_file_controller import (
         get_file_name,
         get_game_id,
 )
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
 def download_file(url_file: str) -> str:
@@ -19,7 +20,7 @@ def download_file(url_file: str) -> str:
                         game_id = get_game_id(file_name)
                         extension = f"{file_name.split('.')[-1]}"
                         game_titles = files("switch_media_downloader").joinpath(
-                                "data/game_titles.json"
+                                "data/game_data/game_titles_es.json"
                         )
                         with open(game_titles, encoding="utf-8") as games_buffer:
                                 games_list = games_buffer.read()
@@ -40,7 +41,9 @@ def download_file(url_file: str) -> str:
 
                                 except KeyError:
                                         print(
-                                                "Ese ID no esta en la lista, se usara el nombre por defecto."
+                                                StringLocalization().get_localizated_string(
+                                                        "hashtah_not_found_text"
+                                                )
                                         )
                                         home_path = pathlib.Path().home()
                                         file_path = f"./Pictures/Nintendo Switch{base_path}{game_id}"
@@ -58,7 +61,11 @@ def download_file(url_file: str) -> str:
 
 def request_file(url_file: str):
         if url_file is not None:
-                print(f"Downloading: {url_file}")
+                print(
+                        StringLocalization()
+                        .get_localizated_string("downloading_media_text")
+                        .format(url_file)
+                )
                 return requests.get(url_file)
         return None
 

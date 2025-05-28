@@ -4,21 +4,22 @@ from switch_media_downloader.APIs.api import Api
 from switch_media_downloader.APIs.bluesky import BlueSky
 from switch_media_downloader.APIs.mastodonAPI import MastodonAPI
 from switch_media_downloader.APIs.twitter import Twitter
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
 def selectAPIs(option="") -> Api:
         load_dotenv()
-        if option == "":
-                option = input(
-                        "Donde deseas publicar: Bluesky(B)/Twitter(T)/Mastodon(M): "
-                )
         match option:
                 case "B":
                         bluesky = BlueSky(
                                 "BLUESKY_PRINCIPAL_NAME", "BLUESKY_PRINCIPAL_API_KEY"
                         )
                         bluesky.connect()
-                        print("Conexión conseguida: con BlueSky")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_succesful_connection_text"
+                                )
+                        )
                         return bluesky
                 case "T":
                         twitter = Twitter(
@@ -28,7 +29,13 @@ def selectAPIs(option="") -> Api:
                                 "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
                                 "TWITTER_BEARER_TOKEN",
                         )
-                        print(f"Conexión conseguida: {twitter.connect()}")
+                        print(
+                                StringLocalization()
+                                .get_localizated_string(
+                                        "twitter_succesful_connection_text"
+                                )
+                                .format(twitter.connect())
+                        )
                         return twitter
                 case "M":
                         mastodon = MastodonAPI(
@@ -39,6 +46,12 @@ def selectAPIs(option="") -> Api:
                         )
                         mastodon.connect()
                         print(
-                                f"Conexión estalecida: {mastodon.client.account_verify_credentials().username}"
+                                StringLocalization()
+                                .get_localizated_string(
+                                        "twitter_succesful_connection_text"
+                                )
+                                .format(
+                                        mastodon.client.account_verify_credentials().username
+                                )
                         )
                         return mastodon
