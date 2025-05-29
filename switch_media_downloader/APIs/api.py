@@ -1,6 +1,7 @@
 """
-Module: api.py
-Description: Interface to the different API modules
+Module: api.py.
+
+Description: Interface to the different API modules.
 Author: Carlos Chacón
 Date: 09-03-2025.
 """
@@ -15,10 +16,10 @@ class Api(ABC):
 
         Methods:
             connect(): Defines the method to connect to the API
-            publish_image(): Defines the method used to publish a image in the social media
-            publish_video(): Defines the method used to publish a video in social media.
-            publish_text(): Defines the method to publish a only-text post in the social media.
-            view_preview(): Defines the method to preview the post before publish it.
+            publish_image(): Define the method used to publish a image in the social media
+            publish_video(): Define the method used to publish a video in social media.
+            publish_text(): Define a method to publish a text post in the social media.
+            view_preview(): Define the method to preview the post before publish it.
 
         """
 
@@ -39,8 +40,8 @@ class Api(ABC):
 
                 Args:
                     msg (str): The text of the post
-                    file (str): The path of the nintendo switch's image
-                    alt (str): The alterative text of the nintendo switch's image
+                    files (list[str]): The path of the nintendo switch's image
+                    alt_text (str): The alterative text of the nintendo switch's image
                 Returns:
                     If the image is published
 
@@ -53,8 +54,8 @@ class Api(ABC):
 
                 Args:
                     msg (str): The text of the post
-                    file (str): The path of the nintendo switch's video
-                    alt (str): The alterative text of the nintendo switch's video
+                    files (list[str]): The path of the nintendo switch's video
+                    alt_text (str): The alterative text of the nintendo switch's video
                 Returns:
                     If the video is published
 

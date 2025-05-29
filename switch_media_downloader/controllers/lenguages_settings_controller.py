@@ -36,23 +36,18 @@ class LenguagesController:
                 else:
                         self.lang = Lenguage.ENG
 
-        def set_program_string_file(self, idiom_id: int):
-                match idiom_id:
-                        case 1:
-                                self.strings_file = "data/strings_en.json"
-                        case 2:
-                                self.strings_file = "data/strings_es.json"
-
-        def set_game_title_string_file(self, idiom_id):
-                match idiom_id:
-                        case 1:
+        def set_game_title_string_file(self):
+                """Return the file path for game titles based on the selected language."""
+                match self.lang:
+                        case Lenguage.ENG:
                                 return "data/game_data/game_titles_en.json"
-                        case 2:
+                        case Lenguage.ESP:
                                 return "data/game_data/game_titles_es.json"
 
-        def set_game_hashtag_string_file(self, idiom_id):
-                match idiom_id:
-                        case 1:
+        def set_game_hashtag_string_file(self):
+                """Return the file path for game hashtag based on the selected language."""  # noqa: E501
+                match self.lang:
+                        case Lenguage.ENG:
                                 return "data/game_data/game_hashtag_en.json"
-                        case 2:
+                        case Lenguage.ESP:
                                 return "data/game_data/game_hashtag_es.json"

@@ -1,4 +1,4 @@
-from switch_media_downloader.APIs.mastodonAPI import MastodonAPI
+from switch_media_downloader.APIs.mastodon import MastodonAPI
 
 
 def test_mastodon_basic():

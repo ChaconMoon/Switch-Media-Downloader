@@ -21,7 +21,8 @@ from switch_media_downloader.controllers.name_file_controller import (
 )
 
 # --- Get APIs Dependence ---
-from switch_media_downloader.controllers.publish import selectAPIs
+from switch_media_downloader.controllers.publish import select_apis
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 # --- Connect to switch Dependence ---
 from switch_media_downloader.switch.connector import (
@@ -41,10 +42,6 @@ from switch_media_downloader.switch.downloaders.video import (
         connect_to_website_video,
         get_video,
 )
-from switch_media_downloader.controllers.lenguages_settings_controller import (
-        LenguagesController,
-)
-from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
 class TypeMedia(Enum):
@@ -55,13 +52,14 @@ class TypeMedia(Enum):
             VIDEO (1): Download/Publish a video
             IMAGE (2): Download/Publish one or more images.
 
-        """
+        """  # noqa: E501
 
         VIDEO = 1
         IMAGE = 2
 
 
 def arguments():
+        """Arguments of the program."""
         parser = argparse.ArgumentParser(
                 description="Opciones de automatización del Script"
         )
@@ -131,11 +129,13 @@ def display_logo():
 
 
 def add_hashtag_to_message(msg: str, reference_url: str, use_hashtag: bool) -> str:
-        """Get the post and Add the Hashtag if exits and the user select use it
+        """
+        Get the post and Add the Hashtag if exits and the user select use it.
 
         Args:
             msg (str): The text of the post
             reference_url (str): url used as a reference to get the file info
+            use_hashtag (bool): True if the program must use the Game Hashtag.
         Example Reference URL:
             >>> 'http://192.168.0.1/img/2025030913522800-A8E55523A054F56F3FE005BBD56F49A7.jpg'
         Returns:
@@ -178,20 +178,24 @@ def publish_media(
         Publish the media in the social media that the user choose.
 
         Args:
-            typemedia (TypeMedia): Define the media to post IMAGE / VIDEO
-            media_path (str): The path of the media file in the computer
-            reference_url (str): url used as a reference to get the file info
+                typemedia (TypeMedia): Define the media to post IMAGE / VIDEO
+                media_paths (list[str]): The paths of the media file in the computer
+                reference_url (str): url used as a reference to get the file info
+                hashtag (bool): True if the progrma must use the hashtag at publish the post
+                social_medias: list[str]:
+                The list of the options of the social media to publish the post
+                text (str): The text of the post.
         Example Reference URL:
             >>> 'http://192.168.0.1/img/2025030913522800-A8E55523A054F56F3FE005BBD56F49A7.jpg'.
 
-        """
+        """  # noqa: E501
         clients = []
         if "T" in social_medias:
-                clients.append(selectAPIs(option="T"))
+                clients.append(select_apis(option="T"))
         if "B" in social_medias:
-                clients.append(selectAPIs(option="B"))
+                clients.append(select_apis(option="B"))
         if "M" in social_medias:
-                clients.append(selectAPIs(option="M"))
+                clients.append(select_apis(option="M"))
         if text == "":
                 msg = input(
                         StringLocalization().get_localizated_string(
@@ -217,6 +221,16 @@ def publish_media(
 
 
 def start_connection_to_switch(password: str):
+        """
+        Establish a connection to the Nintendo Switch using the provided Wi-Fi password.
+
+        Args:
+            password (str): The password for the Switch Wi-Fi network.
+
+        Returns:
+            bool: True if the connection is successful, False otherwise.
+
+        """
         wifi = get_switch_network()
         if wifi is not None:
                 if password is None:
@@ -238,6 +252,17 @@ def start_connection_to_switch(password: str):
 
 
 def get_media_type(arg_video: bool, arg_image: bool):
+        """
+        Determine the type of media to download based on the provided arguments.
+
+        Args:
+            arg_video (bool): True if video is selected.
+            arg_image (bool): True if image is selected.
+
+        Returns:
+            str: The type of media ("VIDEO" or "IMAGE").
+
+        """
         if arg_video:
                 type_media = "VIDEO"
         elif arg_image:
@@ -258,6 +283,20 @@ def get_social_medias(
         photos: list[str],
         typemedia: TypeMedia,
 ):
+        """
+        Determine which social media platforms to use for posting based on user input and arguments.
+
+        Args:
+            args_mastodon (bool): Whether to post to Mastodon.
+            args_twitter (bool): Whether to post to Twitter.
+            args_bluesky (bool): Whether to post to Bluesky.
+            photos (list[str]): List of photo paths (used for image posts).
+            typemedia (TypeMedia): The type of media (IMAGE or VIDEO).
+
+        Returns:
+            list[str] or None: List of selected social media codes or None if posting is cancelled.
+
+        """  # noqa: E501
         social_medias = []
         if args_mastodon:
                 social_medias.append("M")
@@ -299,7 +338,7 @@ def get_social_medias(
                 )
                 for letter in media_list:
                         if letter in ("T", "B", "M"):
-                                social_medias.append(letter)
+                                social_medias.extend(letter)
         return social_medias
 
 
@@ -311,6 +350,18 @@ def post_in_social_media(
         reference_url: str,
         hashtag: str,
 ):
+        """
+        Publish media to selected social media platforms.
+
+        Args:
+            social_medias (list): List of social media codes to post to.
+            post_text (str): The text content of the post.
+            media_type (TypeMedia): The type of media (IMAGE or VIDEO).
+            media_paths (list): List of paths to media files.
+            reference_url (str): Reference URL for the media.
+            hashtag (str): Whether to include a hashtag in the post.
+
+        """
         if social_medias is not None:
                 if post_text is None:
                         post_text = ""
@@ -326,9 +377,7 @@ def post_in_social_media(
 
 
 def main():
-        """
-        Main fuction of the program
-        """
+        """Start function."""
         args = arguments()
         display_logo()
 
@@ -343,8 +392,8 @@ def main():
                                         photo_paths = get_switch_images(url_list)
                                         reference_url = url_list[0]
                                         can_publish = True
-                        except BaseException:
-                                pass
+                        except BaseException as e:  # noqa: BLE001
+                                print(e)
                         disconnect_to_swicth()
                         if can_publish:
                                 print(
@@ -379,8 +428,8 @@ def main():
                         try:
                                 video_path.append(get_video(link_video))
                                 can_publish = True
-                        except BaseException:
-                                pass
+                        except BaseException as e:  # noqa: BLE001
+                                print(e)
                         disconnect_to_swicth()
 
                         social_medias = get_social_medias(

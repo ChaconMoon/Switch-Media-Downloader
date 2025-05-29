@@ -19,7 +19,7 @@ image_writting_error_text,"Error writing image data","Error en la escritura de l
 posting_message_input_text,"Post message: ","Mensaje del post: "
 posting_images_input_text,"Do you want to post these images: (y/n) [the first {0} will be posted]: ","Quieres publicar estas imagenes: (y/n) [se publicaran las {0} primeras]: "
 posting_video_input_text,"Do you want to post this video: (y/n) ","Quieres publicar este video: (y/n) "
-posting_select_social_media_input_text,"On which social network do you want to post? Use spaces: (T) Twitter (B) Bluesky (M) Mastodon","En que red social quieres publicarlo deben tener espacios: (T) Twitter (B) Bluesky (M) Mastodon: "
+posting_select_social_media_input_text,"On which social network do you want to post? Use spaces: (T) Twitter (B) Bluesky (M) Mastodon: ","En que red social quieres publicarlo deben tener espacios: (T) Twitter (B) Bluesky (M) Mastodon: "
 switch_connection_enter_text,"Nintendo Switch console connected","Consola Nintendo Switch conectada"
 switch_connection_exit_text,"Nintendo Switch console disconnected","Consola Nintendo Switch desconectada"
 switch_get_password,"Switch Wi-Fi password: ","Contraseña Wifi Switch: "
@@ -27,6 +27,7 @@ switch_show_wifi_text,"Nintendo Switch Wi-Fi network: {0}","Red Wi-Fi de la Nint
 switch_no_wifi_error_text,"No Wi-Fi network corresponding to a Nintendo Switch was found","No se ha encontrado una red Wi-Fi correspondiente a una Nintendo Switch"
 twitter_connection_text,"Connecting to Twitter (X)","Conectando con Twitter (X)"
 twitter_succesful_connection_text,"Connection established: {0}","Conexión conseguida: {0}"
+twitter_succesful_posting,Post publish on Twitter.,Post publicado en Twitter.
 typeError_text,"Type error","Error de tipo"
 web_browser_open_text,"Opening web browser","Abriendo navegador web"
 web_browser_exit_text,"Closing web browser","Cerrando navegador web"

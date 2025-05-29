@@ -1,13 +1,28 @@
+"""
+Module: publish.py.
+
+Description: Module that creates the objects to access to the APIs of the social media.
+Author: Carlos Chacón
+Date: 29-05-2025.
+"""
+
 from dotenv import load_dotenv
 
 from switch_media_downloader.APIs.api import Api
 from switch_media_downloader.APIs.bluesky import BlueSky
-from switch_media_downloader.APIs.mastodonAPI import MastodonAPI
+from switch_media_downloader.APIs.mastodon import MastodonAPI
 from switch_media_downloader.APIs.twitter import Twitter
 from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
-def selectAPIs(option="") -> Api:
+def select_apis(option="") -> Api:
+        """
+        Return a implementation of a instance of Api of the Social Media in Option.
+
+        Args:
+                option (str): Option used to reference the social media.
+
+        """
         load_dotenv()
         match option:
                 case "B":
@@ -40,8 +55,8 @@ def selectAPIs(option="") -> Api:
                 case "M":
                         mastodon = MastodonAPI(
                                 client_id="APPLICATION_ID_MASTODON",
-                                secret="SECRET_MASTODON",
-                                access_token="ACCESS_TOKEN_MASTODON",
+                                secret="SECRET_MASTODON",  # noqa: S106
+                                access_token="ACCESS_TOKEN_MASTODON",  # noqa: S106
                                 mastodon_instance="MASTODON_INSTANCE",
                         )
                         mastodon.connect()
