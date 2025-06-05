@@ -6,6 +6,8 @@
 
 # Switch Media Downloader
 
+### __THIS SOFTWARE NOT WORKS ON NINTENDO SWITCH 2__
+
 __[Spanish README](README_ES.md)__
 
 A Python program to download screenshots and videos from the Nintendo Switch console.
