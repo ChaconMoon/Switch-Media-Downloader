@@ -4,12 +4,14 @@ import time
 from selenium.webdriver.common.by import By
 
 from switch_media_downloader.controllers.downloads import download_file
-from switch_media_downloader.controllers.selenium.firefox import Firefox
+from switch_media_downloader.controllers.config_controller import (
+        set_browser_to_web_scrapper,
+)
 
 
 def connect_to_website_video():
         time.sleep(5)
-        web_scrapper = Firefox()
+        web_scrapper = set_browser_to_web_scrapper()
         web_scrapper.start_selenium()
         driver = web_scrapper.driver
         while driver.find_elements(By.TAG_NAME, "source") == []:

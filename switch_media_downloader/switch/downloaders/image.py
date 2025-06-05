@@ -4,14 +4,16 @@ import time
 from selenium.webdriver.common.by import By
 
 from switch_media_downloader.controllers.downloads import download_file
-from switch_media_downloader.controllers.selenium.firefox import Firefox
 from switch_media_downloader.controllers.string_localization import StringLocalization
+from switch_media_downloader.controllers.config_controller import (
+        set_browser_to_web_scrapper,
+)
 
 
 def connect_to_website_images():
         time.sleep(5)
 
-        web_scrapper = Firefox()
+        web_scrapper = set_browser_to_web_scrapper()
         web_scrapper.start_selenium()
         driver = web_scrapper.driver
         while driver.find_elements(By.TAG_NAME, "img") == []:
@@ -23,7 +25,7 @@ def connect_to_website_images():
                 print(e)
         finally:
                 web_scrapper.exit_selenium()
-                return link_list
+        return link_list
 
 
 def get_switch_images(images_url_list: list[str]) -> list[str]:

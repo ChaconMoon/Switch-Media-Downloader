@@ -1,5 +1,6 @@
 from enum import Enum
 import configparser
+from importlib.resources import files
 import os
 
 
@@ -13,7 +14,7 @@ class LenguagesController:
 
         def __new__(cls):
                 if cls._instance is None:
-                        cls._instance = super(LenguagesController, cls).__new__(cls)
+                        cls._instance = super().__new__(cls)
                 return cls._instance
 
         def __init__(self):
@@ -23,8 +24,7 @@ class LenguagesController:
         def set_localization_lenguage(self):
                 config = configparser.ConfigParser()
 
-                base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                config_path = os.path.join(base_dir, "config.ini")
+                config_path = files("switch_media_downloader").joinpath("config.ini")
                 config.read(config_path)
 
                 localization = config["config"]["language"]
