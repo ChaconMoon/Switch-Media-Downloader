@@ -83,6 +83,13 @@ def arguments():
                 help=StringLocalization().get_localizated_string("param_image_text"),
         )
         parser.add_argument(
+                "--download-only",
+                action="store_true",
+                help=StringLocalization().get_localizated_string(
+                        "param_download_only_text"
+                ),
+        )
+        parser.add_argument(
                 "--post",
                 "--msg",
                 type=str,
@@ -106,10 +113,16 @@ def arguments():
                 action="store_true",
                 help=StringLocalization().get_localizated_string("param_bluesky_text"),
         )
-        parser.add_argument(
+        hashtag_arg = parser.add_mutually_exclusive_group()
+        hashtag_arg.add_argument(
                 "--hashtag",
                 action="store_true",
                 help=StringLocalization().get_localizated_string("param_hashtag_text"),
+        )
+        hashtag_arg.add_argument(
+                "--no-hashtag",
+                action="store_true",
+                help=StringLocalization().get_localizated_string("param_no_hastag_text"),
         )
         return parser.parse_args()
 
@@ -155,7 +168,7 @@ def add_hashtag_to_message(msg: str, reference_url: str, use_hashtag: bool) -> s
 
         """
         game_hashtag = set_game_hashtag(get_game_id(get_file_name(reference_url)))
-        if game_hashtag is not None:
+        if game_hashtag is not None and not arguments().no_hashtag:
                 if use_hashtag:
                         print(
                                 StringLocalization()
@@ -404,7 +417,7 @@ def main():
                         except BaseException as e:  # noqa: BLE001
                                 print(e)
                         disconnect_to_swicth()
-                        if can_publish:
+                        if can_publish and not arguments().download_only:
                                 print(
                                         StringLocalization()
                                         .get_localizated_string(
@@ -441,23 +454,24 @@ def main():
                                 print(e)
                         disconnect_to_swicth()
 
-                        social_medias = get_social_medias(
-                                args.mastodon,
-                                args.twitter,
-                                args.bluesky,
-                                video_path,
-                                TypeMedia.VIDEO,
-                        )
-
-                        if social_medias is not None:
-                                post_in_social_media(
-                                        social_medias,
-                                        args.post,
-                                        TypeMedia.VIDEO,
+                        if not arguments().download_only:
+                                social_medias = get_social_medias(
+                                        args.mastodon,
+                                        args.twitter,
+                                        args.bluesky,
                                         video_path,
-                                        link_video,
-                                        args.hashtag,
+                                        TypeMedia.VIDEO,
                                 )
+
+                                if social_medias is not None:
+                                        post_in_social_media(
+                                                social_medias,
+                                                args.post,
+                                                TypeMedia.VIDEO,
+                                                video_path,
+                                                link_video,
+                                                args.hashtag,
+                                        )
 
 
 if __name__ == "__main__":

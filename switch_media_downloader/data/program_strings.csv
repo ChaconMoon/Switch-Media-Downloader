@@ -41,3 +41,5 @@ param_mastodon_text,"Publish the image on Mastodon","Publicar la imagen en Masto
 param_twitter_text,"Publish the image on Twitter","Publicar la imagen en Twitter"
 param_bluesky_text,"Publish the image on Bluesky","Publicar la imagen en Bluesky"
 param_hashtag_text,"Use the hashtag of the game in the post","Usar el hashtag del juego en el post"
+param_no_hastag_text,"Skip the options and not use the hashtag","Saltarse la opción de usar el hashtag y no usarlo."
+param_download_only_text,"Stop the program when the download is complete","Detiene el programa una vez ha descargado el contenido"
