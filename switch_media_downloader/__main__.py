@@ -21,7 +21,8 @@ from switch_media_downloader.controllers.name_file_controller import (
 )
 
 # --- Get APIs Dependence ---
-from switch_media_downloader.controllers.publish import selectAPIs
+from switch_media_downloader.controllers.publish import select_apis
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 # --- Connect to switch Dependence ---
 from switch_media_downloader.switch.connector import (
@@ -51,54 +52,77 @@ class TypeMedia(Enum):
             VIDEO (1): Download/Publish a video
             IMAGE (2): Download/Publish one or more images.
 
-        """
+        """  # noqa: E501
 
         VIDEO = 1
         IMAGE = 2
 
 
 def arguments():
+        """Arguments of the program."""
         parser = argparse.ArgumentParser(
-                description="Opciones de automatización del Script"
+                description=StringLocalization().get_localizated_string("params_text")
         )
         parser.add_argument(
-                "-p", "--password", type=str, help="The password of the Switch Wi-Fi"
+                "-p",
+                "--password",
+                type=str,
+                help=StringLocalization().get_localizated_string("param_password_text"),
         )
         media = parser.add_mutually_exclusive_group()
         media.add_argument(
-                "-v", "--video", action="store_true", help="Set if you download a video"
+                "-v",
+                "--video",
+                action="store_true",
+                help=StringLocalization().get_localizated_string("param_video_text"),
         )
         media.add_argument(
-                "-i", "--image", action="store_true", help="Set if you download images"
+                "-i",
+                "--image",
+                action="store_true",
+                help=StringLocalization().get_localizated_string("param_image_text"),
+        )
+        parser.add_argument(
+                "--download-only",
+                action="store_true",
+                help=StringLocalization().get_localizated_string(
+                        "param_download_only_text"
+                ),
         )
         parser.add_argument(
                 "--post",
                 "--msg",
                 type=str,
-                help="The text of the post on the social media",
+                help=StringLocalization().get_localizated_string("param_post_text"),
         )
         parser.add_argument(
                 "-m",
                 "--mastodon",
                 action="store_true",
-                help="Publish the image on mastodon",
+                help=StringLocalization().get_localizated_string("param_mastodon_text"),
         )
         parser.add_argument(
                 "-t",
                 "--twitter",
                 action="store_true",
-                help="Publish the image on twitter",
+                help=StringLocalization().get_localizated_string("param_twitter_text"),
         )
         parser.add_argument(
                 "-b",
                 "--bluesky",
                 action="store_true",
-                help="Publish the image on bluesky",
+                help=StringLocalization().get_localizated_string("param_bluesky_text"),
         )
-        parser.add_argument(
+        hashtag_arg = parser.add_mutually_exclusive_group()
+        hashtag_arg.add_argument(
                 "--hashtag",
                 action="store_true",
-                help="Use the hashtag of the game in the post",
+                help=StringLocalization().get_localizated_string("param_hashtag_text"),
+        )
+        hashtag_arg.add_argument(
+                "--no-hashtag",
+                action="store_true",
+                help=StringLocalization().get_localizated_string("param_no_hastag_text"),
         )
         return parser.parse_args()
 
@@ -127,11 +151,13 @@ def display_logo():
 
 
 def add_hashtag_to_message(msg: str, reference_url: str, use_hashtag: bool) -> str:
-        """Get the post and Add the Hashtag if exits and the user select use it
+        """
+        Get the post and Add the Hashtag if exits and the user select use it.
 
         Args:
             msg (str): The text of the post
             reference_url (str): url used as a reference to get the file info
+            use_hashtag (bool): True if the program must use the Game Hashtag.
         Example Reference URL:
             >>> 'http://192.168.0.1/img/2025030913522800-A8E55523A054F56F3FE005BBD56F49A7.jpg'
         Returns:
@@ -142,13 +168,19 @@ def add_hashtag_to_message(msg: str, reference_url: str, use_hashtag: bool) -> s
 
         """
         game_hashtag = set_game_hashtag(get_game_id(get_file_name(reference_url)))
-        if game_hashtag is not None:
+        if game_hashtag is not None and not arguments().no_hashtag:
                 if use_hashtag:
-                        print(f"Se usara el siguiente hashtag {game_hashtag} ")
+                        print(
+                                StringLocalization()
+                                .get_localizated_string("hashtag_found_text")
+                                .format(game_hashtag)
+                        )
                         return f"{msg} {game_hashtag}"
-                elif (
+                if (
                         input(
-                                f"Se ha encontrado el siguiente hashtag {game_hashtag} ¿Quieres usarlo? (y/n): "
+                                StringLocalization()
+                                .get_localizated_string("hashtag_found_question_text")
+                                .format(game_hashtag)
                         )
                         == "y"
                 ):
@@ -168,22 +200,30 @@ def publish_media(
         Publish the media in the social media that the user choose.
 
         Args:
-            typemedia (TypeMedia): Define the media to post IMAGE / VIDEO
-            media_path (str): The path of the media file in the computer
-            reference_url (str): url used as a reference to get the file info
+                typemedia (TypeMedia): Define the media to post IMAGE / VIDEO
+                media_paths (list[str]): The paths of the media file in the computer
+                reference_url (str): url used as a reference to get the file info
+                hashtag (bool): True if the progrma must use the hashtag at publish the post
+                social_medias: list[str]:
+                The list of the options of the social media to publish the post
+                text (str): The text of the post.
         Example Reference URL:
             >>> 'http://192.168.0.1/img/2025030913522800-A8E55523A054F56F3FE005BBD56F49A7.jpg'.
 
-        """
+        """  # noqa: E501
         clients = []
         if "T" in social_medias:
-                clients.append(selectAPIs(option="T"))
+                clients.append(select_apis(option="T"))
         if "B" in social_medias:
-                clients.append(selectAPIs(option="B"))
+                clients.append(select_apis(option="B"))
         if "M" in social_medias:
-                clients.append(selectAPIs(option="M"))
+                clients.append(select_apis(option="M"))
         if text == "":
-                msg = input("Mensaje del post: ")
+                msg = input(
+                        StringLocalization().get_localizated_string(
+                                "posting_message_input_text"
+                        )
+                )
         else:
                 msg = text
         msg = add_hashtag_to_message(msg, reference_url, hashtag)
@@ -203,26 +243,58 @@ def publish_media(
 
 
 def start_connection_to_switch(password: str):
+        """
+        Establish a connection to the Nintendo Switch using the provided Wi-Fi password.
+
+        Args:
+            password (str): The password for the Switch Wi-Fi network.
+
+        Returns:
+            bool: True if the connection is successful, False otherwise.
+
+        """
         wifi = get_switch_network()
         if wifi is not None:
                 if password is None:
-                        print(f"Wifi Switch = {wifi}")
-                        password = input("Contraseña Wifi Switch: ")
+                        print(
+                                StringLocalization()
+                                .get_localizated_string("switch_show_wifi_text")
+                                .format(wifi)
+                        )
+                        password = input(
+                                StringLocalization()
+                                .get_localizated_string("switch_get_password")
+                                .format(wifi)
+                        )
                 else:
                         password = password
                 return connect_to_switch(wifi, password)
-        else:
-                print("No hay una red Wifi correspondiente a una Nintendo Switch")
-                return False
+        print(StringLocalization().get_localizated_string("switch_no_wifi_error_text"))
+        return False
 
 
 def get_media_type(arg_video: bool, arg_image: bool):
+        """
+        Determine the type of media to download based on the provided arguments.
+
+        Args:
+            arg_video (bool): True if video is selected.
+            arg_image (bool): True if image is selected.
+
+        Returns:
+            str: The type of media ("VIDEO" or "IMAGE").
+
+        """
         if arg_video:
                 type_media = "VIDEO"
         elif arg_image:
                 type_media = "IMAGE"
         else:
-                type_media = input("Indique el contenido a descargar: (IMAGE/VIDEO): ")
+                type_media = input(
+                        StringLocalization().get_localizated_string(
+                                "downloading_media_select_type_text"
+                        )
+                )
         return type_media
 
 
@@ -233,6 +305,20 @@ def get_social_medias(
         photos: list[str],
         typemedia: TypeMedia,
 ):
+        """
+        Determine which social media platforms to use for posting based on user input and arguments.
+
+        Args:
+            args_mastodon (bool): Whether to post to Mastodon.
+            args_twitter (bool): Whether to post to Twitter.
+            args_bluesky (bool): Whether to post to Bluesky.
+            photos (list[str]): List of photo paths (used for image posts).
+            typemedia (TypeMedia): The type of media (IMAGE or VIDEO).
+
+        Returns:
+            list[str] or None: List of selected social media codes or None if posting is cancelled.
+
+        """  # noqa: E501
         social_medias = []
         if args_mastodon:
                 social_medias.append("M")
@@ -244,24 +330,37 @@ def get_social_medias(
                 if typemedia is TypeMedia.IMAGE:
                         if (
                                 input(
-                                        f"Quieres publicar estas imagenes: (y/n) [se publicaran las {len(photos)} primeras]: "
+                                        StringLocalization()
+                                        .get_localizated_string(
+                                                "posting_images_input_text"
+                                        )
+                                        .format(len(photos))
                                 )
                                 != "y"
                         ):
                                 return None
                 else:
-                        if input("Quieres publicar este video: (y/n) ") != "y":
+                        if (
+                                input(
+                                        StringLocalization().get_localizated_string(
+                                                "posting_video_input_text"
+                                        )
+                                )
+                                != "y"
+                        ):
                                 return None
                 media_list = (
                         input(
-                                "En que red social quieres publicarlo deben tener espacios: (T) Twitter (B) Bluesky (M) Mastodon"
+                                StringLocalization().get_localizated_string(
+                                        "posting_select_social_media_input_text"
+                                )
                         )
                         .upper()
                         .split(" ")
                 )
                 for letter in media_list:
                         if letter in ("T", "B", "M"):
-                                social_medias.append(letter)
+                                social_medias.extend(letter)
         return social_medias
 
 
@@ -273,6 +372,18 @@ def post_in_social_media(
         reference_url: str,
         hashtag: str,
 ):
+        """
+        Publish media to selected social media platforms.
+
+        Args:
+            social_medias (list): List of social media codes to post to.
+            post_text (str): The text content of the post.
+            media_type (TypeMedia): The type of media (IMAGE or VIDEO).
+            media_paths (list): List of paths to media files.
+            reference_url (str): Reference URL for the media.
+            hashtag (str): Whether to include a hashtag in the post.
+
+        """
         if social_medias is not None:
                 if post_text is None:
                         post_text = ""
@@ -288,9 +399,7 @@ def post_in_social_media(
 
 
 def main():
-        """
-        Main fuction of the program
-        """
+        """Start function."""
         args = arguments()
         display_logo()
 
@@ -305,11 +414,17 @@ def main():
                                         photo_paths = get_switch_images(url_list)
                                         reference_url = url_list[0]
                                         can_publish = True
-                        except BaseException:
-                                pass
+                        except BaseException as e:  # noqa: BLE001
+                                print(e)
                         disconnect_to_swicth()
-                        if can_publish:
-                                print(f"Se han descargado {len(url_list)} imagenes")
+                        if can_publish and not arguments().download_only:
+                                print(
+                                        StringLocalization()
+                                        .get_localizated_string(
+                                                "download_finish_images_text"
+                                        )
+                                        .format(len(url_list))
+                                )
 
                                 social_medias = get_social_medias(
                                         args.mastodon,
@@ -335,28 +450,37 @@ def main():
                         try:
                                 video_path.append(get_video(link_video))
                                 can_publish = True
-                        except BaseException:
-                                pass
+                        except BaseException as e:  # noqa: BLE001
+                                print(e)
                         disconnect_to_swicth()
 
-                        social_medias = get_social_medias(
-                                args.mastodon,
-                                args.twitter,
-                                args.bluesky,
-                                video_path,
-                                TypeMedia.VIDEO,
-                        )
-
-                        if social_medias is not None:
-                                post_in_social_media(
-                                        social_medias,
-                                        args.post,
-                                        TypeMedia.VIDEO,
+                        if not arguments().download_only:
+                                social_medias = get_social_medias(
+                                        args.mastodon,
+                                        args.twitter,
+                                        args.bluesky,
                                         video_path,
-                                        link_video,
-                                        args.hashtag,
+                                        TypeMedia.VIDEO,
                                 )
+
+                                if social_medias is not None:
+                                        post_in_social_media(
+                                                social_medias,
+                                                args.post,
+                                                TypeMedia.VIDEO,
+                                                video_path,
+                                                link_video,
+                                                args.hashtag,
+                                        )
 
 
 if __name__ == "__main__":
-        main()
+        try:
+                main()
+        except KeyboardInterrupt:
+                disconnect_to_swicth()
+                print(
+                        StringLocalization().get_localizated_string(
+                                "keyboard_interrupt_text"
+                        )
+                )

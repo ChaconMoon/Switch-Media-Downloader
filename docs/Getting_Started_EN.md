@@ -11,6 +11,8 @@ Poetry version 2.1.1 or higher [Installation link](https://python-poetry.org/doc
 
 A Wi-Fi connection (To connect with the Nintendo Switch)
 
+A web browser installed (Firefox [Default] or Edge)
+
 (Optional) A wired network connection as a secondary to the Wi-Fi network.
 
 ## Installation using Poetry (Recommended)
@@ -70,6 +72,15 @@ Run the program as a Python module:
 python -m switch_media_downloader
 ```
 
+## Configuration
+
+The `config.ini` file contains the program configuration.
+```
+[config]
+language = (ENG/ESP) -> Sets the language used during execution and for game names
+web-scapper = (Firefox/Edge) -> Sets the browser used to obtain image links
+```
+
 ## Execution
 
 This program can be used with parameters to automate its execution or with an interactive menu.
@@ -85,11 +96,13 @@ These are the parameters you can pass to the program to automate its behavior:
 | `-p`, `--password`  | Wi-Fi network password                                       |
 | `-v`, `--video`     | Downloads a video (mutually exclusive with `--image`)        |
 | `-i`, `--image`     | Downloads images (mutually exclusive with `--video`)         |
+| `--download-only`   | Stops the program after downloading                          |
 | `--post`, `--msg`   | Post text for social media                                   |
 | `-m`, `--mastodon`  | Posts to Mastodon                                            |
 | `-t`, `--twitter`   | Posts to Twitter (X)                                         |
 | `-b`, `--bluesky`   | Posts to Bluesky                                             |
-| `--hashtag`         | Hashtag to include in the post if defined                    |
+| `--hashtag`         | Includes the hashtag in the post if defined                  |
+| `--no-hashtag`      | Omits the hashtag in the post                                |
 ```
 
 Example usage:

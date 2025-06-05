@@ -1,24 +1,40 @@
+"""
+Module: publish.py.
+
+Description: Module that creates the objects to access to the APIs of the social media.
+Author: Carlos Chacón
+Date: 29-05-2025.
+"""
+
 from dotenv import load_dotenv
 
 from switch_media_downloader.APIs.api import Api
 from switch_media_downloader.APIs.bluesky import BlueSky
-from switch_media_downloader.APIs.mastodonAPI import MastodonAPI
+from switch_media_downloader.APIs.mastodon import MastodonAPI
 from switch_media_downloader.APIs.twitter import Twitter
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
-def selectAPIs(option="") -> Api:
+def select_apis(option="") -> Api:
+        """
+        Return a implementation of a instance of Api of the Social Media in Option.
+
+        Args:
+                option (str): Option used to reference the social media.
+
+        """
         load_dotenv()
-        if option == "":
-                option = input(
-                        "Donde deseas publicar: Bluesky(B)/Twitter(T)/Mastodon(M): "
-                )
         match option:
                 case "B":
                         bluesky = BlueSky(
                                 "BLUESKY_PRINCIPAL_NAME", "BLUESKY_PRINCIPAL_API_KEY"
                         )
                         bluesky.connect()
-                        print("Conexión conseguida: con BlueSky")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_succesful_connection_text"
+                                )
+                        )
                         return bluesky
                 case "T":
                         twitter = Twitter(
@@ -28,17 +44,29 @@ def selectAPIs(option="") -> Api:
                                 "TWITTER_PRIMARY_ACCESS_TOKEN_SECRET",
                                 "TWITTER_BEARER_TOKEN",
                         )
-                        print(f"Conexión conseguida: {twitter.connect()}")
+                        print(
+                                StringLocalization()
+                                .get_localizated_string(
+                                        "twitter_succesful_connection_text"
+                                )
+                                .format(twitter.connect())
+                        )
                         return twitter
                 case "M":
                         mastodon = MastodonAPI(
                                 client_id="APPLICATION_ID_MASTODON",
-                                secret="SECRET_MASTODON",
-                                access_token="ACCESS_TOKEN_MASTODON",
+                                secret="SECRET_MASTODON",  # noqa: S106
+                                access_token="ACCESS_TOKEN_MASTODON",  # noqa: S106
                                 mastodon_instance="MASTODON_INSTANCE",
                         )
                         mastodon.connect()
                         print(
-                                f"Conexión estalecida: {mastodon.client.account_verify_credentials().username}"
+                                StringLocalization()
+                                .get_localizated_string(
+                                        "twitter_succesful_connection_text"
+                                )
+                                .format(
+                                        mastodon.client.account_verify_credentials().username
+                                )
                         )
                         return mastodon

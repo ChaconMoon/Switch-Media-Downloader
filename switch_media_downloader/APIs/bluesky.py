@@ -1,5 +1,6 @@
 """
-Module: bluesky.py
+Module: bluesky.py.
+
 Description: Module to interact with the Bluesky API
 Author: Carlos Chacón
 Date: 09-03-2025.
@@ -8,6 +9,7 @@ Date: 09-03-2025.
 # --- Import the ATProto Client ---
 # --- Import operative system operations ---
 import os
+from pathlib import Path
 
 from atproto import Client
 
@@ -20,8 +22,11 @@ from atproto_client.models.app.bsky.embed.defs import AspectRatio
 # --- load the enviroment variables dependeces ---
 from dotenv import load_dotenv
 
-# --- load Apis module
+# --- load Apis Abstact Class ---
 from switch_media_downloader.APIs.api import Api
+
+# --- load String Localization ---
+from switch_media_downloader.controllers.string_localization import StringLocalization
 
 
 class BlueSky(Api):
@@ -42,12 +47,21 @@ class BlueSky(Api):
 
         # Init the name of the account and the token
         def __init__(self, account: str, token: str):
+                """
+                Create a new object to connect to the bluesky API.
+
+                Args:
+                        account (str): The Bluesky Account Username
+                        token (str): The Bluesky API Token
+
+                """
                 load_dotenv()
                 self.account = os.getenv(account)
                 self.token = os.getenv(token)
 
         # Override the string method
         def __str__(self):
+                """Overrride the string method to print the account info."""
                 return f"{self.account, self.client}"
 
         def connect(self) -> bool:
@@ -59,15 +73,31 @@ class BlueSky(Api):
 
                 """
                 try:
-                        print("Conectando...")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_connection_text_1"
+                                )
+                        )
                         self.client.login(self.account, self.token)
-                        print("Conexion exitosa")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_connection_text_2"
+                                )
+                        )
                         return True
                 except AtProtocolError:
-                        print("Error en el inicio de sesión en BlueSky")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_session_error_text"
+                                )
+                        )
                         return False
                 except ValueError:
-                        print("Error a la hora de importar las credenciales")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_credential_import_error_text"
+                                )
+                        )
                         return None
 
         def publish_images(self, msg: str, files: list[str], alt_text: str) -> bool:
@@ -76,8 +106,8 @@ class BlueSky(Api):
 
                 Args:
                     msg (str): The text of the post
-                    file (str): The path of the nintendo switch's image
-                    alt (str): The alterative text of the nintendo switch's image
+                    files (list[str]): The path of the nintendo switch's image
+                    alt_text (str): The alterative text of the nintendo switch's image
                 Returns:
                     If the image is published
 
@@ -85,9 +115,11 @@ class BlueSky(Api):
                 try:
                         if len(files) > 1:
                                 print(
-                                        "Por limitaciones de la API de Bluesky no se permite la publicación de multiples imagen en un post, se usara solo la primera."
+                                        StringLocalization().get_localizated_string(
+                                                "bluesky_limitation_text"
+                                        )
                                 )
-                        with open(files[0], "rb") as f:
+                        with Path.open(files[0], "rb") as f:
                                 photo = f.read()
                                 aspect_ratio = AspectRatio(width=1280, height=720)
 
@@ -99,10 +131,18 @@ class BlueSky(Api):
                         )
                         return True
                 except AtProtocolError:
-                        print("Error en ATProto, la imagen no ha sido publica")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_ATProtocol_Error_text_image"
+                                )
+                        )
                         return False
                 except TypeError:
-                        print("Error de tipo")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "typeError_text"
+                                )
+                        )
                         return False
 
         def publish_video(self, msg: str, file: str, alt_text: str) -> bool:
@@ -112,13 +152,13 @@ class BlueSky(Api):
                 Args:
                     msg (str): The text of the post
                     file (str): The path of the nintendo switch's video
-                    alt (str): The alterative text of the nintendo switch's video
+                    alt_text (str): The alterative text of the nintendo switch's video
                 Returns:
                     If the video is published
 
                 """
                 try:
-                        with open(file, "rb") as v:
+                        with Path.open(file, "rb") as v:
                                 video = v.read()
                                 aspect_ratio = AspectRatio(width=1280, height=720)
 
@@ -130,14 +170,22 @@ class BlueSky(Api):
                         )
                         return True
                 except AtProtocolError:
-                        print("Error en ATProto, el video no se ha publicado")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "bluesky_ATProtocol_Error_text_video"
+                                )
+                        )
                         return False
                 except TypeError:
-                        print("Error de tipo")
+                        print(
+                                StringLocalization().get_localizated_string(
+                                        "typeError_text"
+                                )
+                        )
                         return False
 
         def publish_text():
-                pass
+                """Non Implemented."""
 
         def view_preview():
-                pass
+                """Non Implemented."""
