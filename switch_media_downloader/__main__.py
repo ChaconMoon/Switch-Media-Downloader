@@ -464,6 +464,7 @@ if __name__ == "__main__":
         try:
                 main()
         except KeyboardInterrupt:
+                disconnect_to_swicth()
                 print(
                         StringLocalization().get_localizated_string(
                                 "keyboard_interrupt_text"
