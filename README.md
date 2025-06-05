@@ -6,7 +6,7 @@
 
 # Switch Media Downloader
 
-### __THIS SOFTWARE NOT WORKS ON NINTENDO SWITCH 2__
+### __THIS SOFTWARE DOES NOT WORK ON NINTENDO SWITCH 2__
 
 __[Spanish README](README_ES.md)__
 

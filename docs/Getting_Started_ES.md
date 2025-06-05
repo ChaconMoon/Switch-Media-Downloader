@@ -10,6 +10,8 @@ Poetry versión 2.1.1 o superior [Enlace de instalación](https://python-poetry.
 
 Una conexión a redes mediante Wi-Fi (Para conectarte con la Nintendo Switch)
 
+Un navegador web instalado (Firefox [Por defecto] o Edge)
+
 (Opcional) Una conexión por red cableada como secundaria de la red Wi-Fi.
 
 ## Instalación con Poetry (Recomendado)
@@ -69,6 +71,15 @@ Ejecuta el progrma como un modulo de Python.
 python -m switch_media_downloader
 ```
 
+## Configuración
+
+El fichero `config.ini` contiene la configuración del programa.
+```
+[config]
+language = (ENG/ESP) -> Determina el lenguaje usado durante la ejecución y el del nombre de los juegos.
+
+web-scapper = (Firefox/Edge) -> Determina el navegador que se usara para obtener los enlaces a las imagenes
+```
 ## Ejecución.
 Este programa puede usarse con parametros para automatizar su ejecución o con un menú dentro de este.
 
@@ -82,11 +93,13 @@ Estos son los parametros que se le pueden pasar al programa para automatizar su 
 | `-p`, `--password` | Contraseña de la red Wi-Fi                                   |
 | `-v`, `--video`    | Descarga un video (mutuamente excluyente con `--image`)      |
 | `-i`, `--image`    | Descarga imágenes (mutuamente excluyente con `--video`)      |
+| `--download-only`  | Determina si el programa se detiene despues de la descarga   |
 | `--post`, `--msg`  | Texto del post para redes sociales                           |
 | `-m`, `--mastodon` | Publica en Mastodon                                          |
 | `-t`, `--twitter`  | Publica en Twitter (X)                                       |
 | `-b`, `--bluesky`  | Publica en Bluesky                                           |
 | `--hashtag`        | Hashtag a incluir en la publicación si está definido         |
+| `-no-hashtag`      | Omite el menú para publicar sin ponerlo                      |
 
 ```
 
