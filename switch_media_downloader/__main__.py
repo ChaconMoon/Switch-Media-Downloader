@@ -61,46 +61,55 @@ class TypeMedia(Enum):
 def arguments():
         """Arguments of the program."""
         parser = argparse.ArgumentParser(
-                description="Opciones de automatización del Script"
+                description=StringLocalization().get_localizated_string("params_text")
         )
         parser.add_argument(
-                "-p", "--password", type=str, help="The password of the Switch Wi-Fi"
+                "-p",
+                "--password",
+                type=str,
+                help=StringLocalization().get_localizated_string("param_password_text"),
         )
         media = parser.add_mutually_exclusive_group()
         media.add_argument(
-                "-v", "--video", action="store_true", help="Set if you download a video"
+                "-v",
+                "--video",
+                action="store_true",
+                help=StringLocalization().get_localizated_string("param_video_text"),
         )
         media.add_argument(
-                "-i", "--image", action="store_true", help="Set if you download images"
+                "-i",
+                "--image",
+                action="store_true",
+                help=StringLocalization().get_localizated_string("param_image_text"),
         )
         parser.add_argument(
                 "--post",
                 "--msg",
                 type=str,
-                help="The text of the post on the social media",
+                help=StringLocalization().get_localizated_string("param_post_text"),
         )
         parser.add_argument(
                 "-m",
                 "--mastodon",
                 action="store_true",
-                help="Publish the image on mastodon",
+                help=StringLocalization().get_localizated_string("param_mastodon_text"),
         )
         parser.add_argument(
                 "-t",
                 "--twitter",
                 action="store_true",
-                help="Publish the image on twitter",
+                help=StringLocalization().get_localizated_string("param_twitter_text"),
         )
         parser.add_argument(
                 "-b",
                 "--bluesky",
                 action="store_true",
-                help="Publish the image on bluesky",
+                help=StringLocalization().get_localizated_string("param_bluesky_text"),
         )
         parser.add_argument(
                 "--hashtag",
                 action="store_true",
-                help="Use the hashtag of the game in the post",
+                help=StringLocalization().get_localizated_string("param_hashtag_text"),
         )
         return parser.parse_args()
 
@@ -452,4 +461,11 @@ def main():
 
 
 if __name__ == "__main__":
-        main()
+        try:
+                main()
+        except KeyboardInterrupt:
+                print(
+                        StringLocalization().get_localizated_string(
+                                "keyboard_interrupt_text"
+                        )
+                )
