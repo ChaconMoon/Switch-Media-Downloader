@@ -1,6 +1,6 @@
 [project]
 name = "switch-media-downloader"
-version = "0.1.0"
+version = "0.1b"
 description = "A Nintendo Switch screenshot and video downloader"
 authors = [
   {name = "Carlos Chacón", email = "chaconmooncarlos@gmail.com"}]
