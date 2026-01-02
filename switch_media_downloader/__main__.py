@@ -6,7 +6,7 @@ Description: Module that starts the Switch Media Downloader
 Author: Carlos Chacón
 Date: 09-03-2025.
 """
-
+from sys import platform
 # --- Standard Dependence ---
 import argparse
 from enum import Enum
@@ -254,6 +254,9 @@ def start_connection_to_switch(password: str):
 
         """
         wifi = get_switch_network()
+        if platform == "linux" or platform == "linux2":
+                input("Please Connect to the Switch Wi-Fi manually. Then press Enter to continue...")
+                return True
         if wifi is not None:
                 if password is None:
                         print(
